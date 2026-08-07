@@ -3,7 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Laporan Kerja Teknisi</title>
+    <title>Sistem Laporan Kerja Teknisi - Grand El Hajj</title>
+    
+    <!-- Firebase SDK (Version 10 - Realtime Database) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDzzLs-shcgPuVAWUkSut1U4PqCRJ3M34c",
+            authDomain: "laporan-teknisi-grand-el-hajj.firebaseapp.com",
+            databaseURL: "https://laporan-teknisi-grand-el-hajj-default-rtdb.firebaseio.com",
+            projectId: "laporan-teknisi-grand-el-hajj",
+            storageBucket: "laporan-teknisi-grand-el-hajj.firebasestorage.app",
+            messagingSenderId: "864956472638",
+            appId: "1:864956472638:web:b146a4af10b9dc372ca06f",
+            measurementId: "G-KYE953BRFB"
+        };
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            const db = getDatabase(app);
+
+            window.db = db;
+            window.dbRef = ref;
+            window.dbSet = set;
+            window.dbPush = push;
+            window.dbOnValue = onValue;
+            window.dbRemove = remove;
+            console.log("Firebase Terhubung Sempurna!");
+        } catch (error) {
+            console.error("Gagal Inisialisasi Firebase:", error);
+        }
+    </script>
+
     <style>
         * {
             box-sizing: border-box;
@@ -12,7 +45,6 @@
             padding: 0;
         }
 
-        /* Backdrop Bernuansa Biru */
         body {
             background: linear-gradient(135deg, #0d47a1, #1976d2, #42a5f5);
             min-height: 100vh;
@@ -22,71 +54,29 @@
             padding: 20px;
         }
 
-        /* 1. SPLASH SCREEN (LAYAR PEMBUKA LOGO) */
-        #splashScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #0a2540, #0d47a1, #1976d2);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.8s ease, visibility 0.8s;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-
-        #splashScreen.fade-out {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .splash-logo {
-            max-width: 220px;
-            max-height: 120px;
-            object-fit: contain;
-            margin-bottom: 20px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid #ffffff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-top: 15px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* CARD MAIN CONTAINER */
         .card {
             background: #ffffff;
             border-radius: 12px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.2);
             width: 100%;
-            max-width: 650px;
+            max-width: 800px;
             padding: 25px;
             margin-bottom: 20px;
         }
 
-        /* Header Logo & Tanggal Top */
+        #splashSection {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .main-company-logo {
+            max-width: 260px;
+            max-height: 140px;
+            object-fit: contain;
+            margin-bottom: 20px;
+            filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.15));
+        }
+
         .app-header {
             text-align: center;
             border-bottom: 2px solid #e0e0e0;
@@ -107,7 +97,6 @@
             font-weight: bold;
         }
 
-        /* Form Controls */
         .form-group {
             margin-bottom: 15px;
         }
@@ -143,45 +132,6 @@
             height: 80px;
         }
 
-        /* List Prioritas Pekerjaan */
-        .priority-box {
-            background-color: #e3f2fd;
-            border-left: 5px solid #1976d2;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-        }
-
-        .priority-item {
-            background: #fff;
-            padding: 10px;
-            margin-top: 8px;
-            border-radius: 6px;
-            border: 1px solid #bbdefb;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .badge-urgent {
-            background-color: #d32f2f;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.75em;
-            font-weight: bold;
-        }
-
-        .badge-medium {
-            background-color: #f57c00;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.75em;
-            font-weight: bold;
-        }
-
-        /* Grid Upload Foto Before/After */
         .photo-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -228,22 +178,19 @@
             margin-top: 8px;
         }
 
-        .btn-secondary:hover {
-            background-color: #424242;
+        .btn-logout {
+            background-color: #d32f2f;
+            margin-top: 8px;
         }
 
         .btn-danger {
             background-color: #d32f2f;
             color: white;
             border: none;
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.8em;
-        }
-
-        .btn-danger:hover {
-            background-color: #b71c1c;
+            font-size: 0.85em;
         }
 
         .hidden {
@@ -261,7 +208,6 @@
             text-decoration: none;
         }
 
-        /* Tabel Admin */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -281,47 +227,111 @@
         th {
             background-color: #e3f2fd;
         }
+
+        .report-card {
+            border: 1px solid #ddd;
+            border-left: 5px solid #1976d2;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            background: #fafafa;
+        }
+
+        .report-photos {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .report-photos img {
+            width: 100px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: bold;
+            color: white;
+        }
+
+        .bg-biasa { background-color: #4caf50; }
+        .bg-sedang { background-color: #ff9800; }
+        .bg-darurat { background-color: #f44336; }
+
+        .filter-bar {
+            background: #e3f2fd;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .notification-banner {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border: 1px solid #c3e6cb;
+            display: none;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .card { box-shadow: none; border: none; max-width: 100%; width: 100%; }
+            .btn, .form-group, .admin-link, #clearReportBtn, .filter-bar, .app-header img { display: none !important; }
+            .report-card { break-inside: avoid; border: 1px solid #000; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- 0. SPLASH SCREEN (LAYAR PEMBUKA APLIKASI) -->
-    <div id="splashScreen">
-        <img id="splashLogoImg" src="https://via.placeholder.com/220x100?text=Logo+Perusahaan" alt="Logo Perusahaan" class="splash-logo">
-        <h2 style="font-weight: 600; margin-bottom: 5px;">Aplikasi Laporan Teknisi</h2>
-        <p style="font-size: 0.85em; opacity: 0.8;">Sistem Pelaporan Harian Real-time</p>
-        <div class="spinner"></div>
-    </div>
-
-    <!-- 1. MODAL LOGIN KODE AKSES TEKNISI -->
-    <div id="loginSection" class="card">
-        <h2 style="color: #0d47a1; text-align: center; margin-bottom: 15px;">Akses Teknisi</h2>
-        <p style="text-align: center; color: #666; margin-bottom: 20px;">Masukkan Kode Unik Anda</p>
-        <div class="form-group">
-            <input type="password" id="accessCodeInput" placeholder="Masukkan Kode Akses Anda">
-        </div>
-        <button class="btn" onclick="checkAccessCode()">Masuk Form</button>
+    <!-- 1. HALAMAN UTAMA / SPLASH (LOGO) -->
+    <div id="splashSection" class="card">
+        <img id="mainLogoImg" src="https://via.placeholder.com/260x120?text=Memuat+Logo..." alt="Logo Perusahaan" class="main-company-logo">
+        <h2 style="color: #0d47a1; margin-bottom: 10px;">Sistem Laporan Kerja Teknisi</h2>
+        <p style="color: #666; margin-bottom: 25px; font-size: 0.9em;">Portal resmi pelaporan harian tim teknisi lapangan.</p>
+        <button class="btn" onclick="goToLoginSection()">Masuk Aplikasi Laporan</button>
         
         <div class="admin-link">
             <a href="#" onclick="showAdminLogin()">⚙️ Akses Panel Admin</a>
         </div>
     </div>
 
-    <!-- 2. FORM LAPORAN UTAMA TEKNISI -->
+    <!-- 2. LOGIN KODE TEKNISI -->
+    <div id="loginSection" class="card hidden">
+        <div class="app-header">
+            <img id="loginLogoImg" src="https://via.placeholder.com/180x60?text=Logo+Perusahaan" alt="Logo Perusahaan" class="company-logo">
+        </div>
+        <h2 style="color: #0d47a1; text-align: center; margin-bottom: 10px;">Akses Teknisi</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 20px;">Masukkan Kode Akses Unik Anda</p>
+        <div class="form-group">
+            <input type="password" id="accessCodeInput" placeholder="Contoh: TEK001">
+        </div>
+        <button class="btn" onclick="checkAccessCode()">Masuk ke Form Laporan</button>
+        <button type="button" class="btn btn-secondary" onclick="goToSplash()">Kembali ke Halaman Awal</button>
+    </div>
+
+    <!-- 3. FORM LAPORAN UTAMA -->
     <div id="reportSection" class="card hidden">
-        <!-- Header: Logo & Tanggal Top -->
         <div class="app-header">
             <img id="appLogo" src="https://via.placeholder.com/180x60?text=Logo+Perusahaan" alt="Logo Perusahaan" class="company-logo"><br>
             <span class="date-display" id="todayDate"></span>
         </div>
 
-        <!-- DAFTAR PEKERJAAN PRIORITAS UTAMA -->
-        <div class="priority-box">
-            <h4 style="color: #0d47a1; margin-bottom: 5px;">🔥 Daftar Pekerjaan Prioritas Utama:</h4>
-            <p style="font-size: 0.8em; color: #555;">Pekerjaan di bawah ini wajib didahulukan penyelesaiannya!</p>
-            <div id="priorityListContainer">
-                <!-- Data Pekerjaan Prioritas Dimuat Dinamis -->
-            </div>
+        <div id="successNotification" class="notification-banner">
+            ✅ Laporan Anda Berhasil Disimpan dan Masuk ke Database Admin!
         </div>
 
         <h3 style="color: #0d47a1; margin-bottom: 15px; text-align: center;">Form Laporan Kerja Harian</h3>
@@ -329,7 +339,7 @@
         <form id="techForm" onsubmit="submitForm(event)">
             <div class="form-group">
                 <label for="techName">Nama Teknisi</label>
-                <input type="text" id="techName" readonly placeholder="Terisi otomatis oleh sistem">
+                <input type="text" id="techName" readonly placeholder="Terisi otomatis">
             </div>
 
             <div class="form-group">
@@ -338,7 +348,7 @@
             </div>
 
             <div class="form-group">
-                <label for="jobPriority">Tingkat Prioritas Pekerjaan Ini</label>
+                <label for="jobPriority">Tingkat Prioritas Pekerjaan</label>
                 <select id="jobPriority" required>
                     <option value="Biasa">Biasa (Rutin)</option>
                     <option value="Sedang">Sedang (Penting)</option>
@@ -347,13 +357,12 @@
             </div>
 
             <div class="form-group">
-                <label for="jobDescription">Tulisan Pekerjaan / Rincian Tugas</label>
-                <textarea id="jobDescription" placeholder="Jelaskan detail pekerjaan..." required></textarea>
+                <label for="jobDescription">Rincian Tugas & Pekerjaan</label>
+                <textarea id="jobDescription" placeholder="Jelaskan detail perbaikan/perawatan..." required></textarea>
             </div>
 
-            <!-- Upload Foto Sebelum dan Sesudah -->
             <div class="form-group">
-                <label>Upload Pekerjaan</label>
+                <label>Dokumentasi Pekerjaan</label>
                 <div class="photo-grid">
                     <div class="photo-box">
                         <label style="font-size: 0.85em;">Sebelum (Before)</label>
@@ -368,51 +377,32 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn">Kirim Laporan & Kirim Notifikasi</button>
-            <button type="button" class="btn btn-secondary" onclick="logout()">Keluar / Ganti Akun</button>
+            <button type="submit" id="btnSubmitReport" class="btn">Kirim Laporan Sekarang</button>
+            <button type="button" class="btn btn-secondary" onclick="switchAccount()">🔄 Ganti Akun</button>
+            <button type="button" class="btn btn-logout" onclick="logoutApp()">🚪 Keluar Aplikasi</button>
         </form>
     </div>
 
-    <!-- 3. PANEL ADMIN -->
+    <!-- 4. PANEL ADMIN & DASBOR LAPORAN -->
     <div id="adminSection" class="card hidden">
-        <h3 style="color: #0d47a1; margin-bottom: 15px;">Panel Admin & Keamanan</h3>
-        
-        <!-- Status Server -->
-        <div class="form-group" style="background: #e8f5e9; padding: 10px; border-radius: 6px; border: 1px solid #81c784;">
-            <p style="font-size: 0.85em; color: #2e7d32;"><strong>Status Server Notifikasi:</strong> <span id="notifStatus">Aktif & Siap Menerima Laporan</span></p>
-            <button onclick="requestNotificationPermission()" style="margin-top: 5px; font-size: 0.75em; padding: 4px 8px;">Aktifkan Notifikasi Pop-up Browser Admin</button>
-        </div>
+        <h3 style="color: #0d47a1; margin-bottom: 15px;">Panel Admin & Dasbor Laporan Lengkap</h3>
 
-        <!-- Tambah Pekerjaan Prioritas -->
+        <!-- PENGATURAN LOGO -->
         <div class="form-group" style="border-bottom: 1px solid #ccc; padding-bottom: 15px;">
-            <h4 style="color: #1565c0; margin-bottom: 8px;">Tambah Tugas Prioritas untuk Teknisi</h4>
-            <input type="text" id="newPriorityTask" placeholder="Misal: Perbaikan AC Server Lantai 3 Ruang Admin" style="margin-bottom: 8px;">
-            <select id="newPriorityLevel" style="margin-bottom: 8px;">
-                <option value="Darurat/Tinggi">Darurat / Tinggi</option>
-                <option value="Sedang">Sedang</option>
-            </select>
-            <button class="btn" onclick="addPriorityTask()" style="background-color: #d32f2f;">Tambahkan Tugas Prioritas</button>
-        </div>
-
-        <!-- PENGATURAN LOGO PERUSAHAAN (Memerlukan Password: logo@1234#) -->
-        <div class="form-group" style="border-bottom: 1px solid #ccc; padding-bottom: 15px; margin-top: 15px;">
             <h4 style="color: #1565c0; margin-bottom: 8px;">🔒 Pengaturan Logo Perusahaan</h4>
             <label for="logoUrl">URL Gambar Logo Baru</label>
             <input type="text" id="logoUrl" placeholder="https://domain.com/logo.png">
-            <button class="btn" onclick="updateLogoWithAuth()" style="margin-top: 8px; background-color: #0288d1;">Simpan Logo Baru</button>
+            <button type="button" class="btn" onclick="updateLogoWithAuth()" style="margin-top: 8px; background-color: #0288d1;">Simpan Logo Baru</button>
         </div>
 
-        <!-- KELOLA TEKNISI: DAFTAR & HAPUS (Memerlukan Password: Elhajj@1234#) -->
-        <div class="form-group" style="margin-top: 15px;">
-            <h4 style="color: #1565c0; margin-bottom: 10px;">🔒 Kelola Kode Teknisi (Daftar / Hapus)</h4>
+        <!-- KELOLA TEKNISI -->
+        <div class="form-group" style="border-bottom: 1px solid #ccc; padding-bottom: 15px;">
+            <h4 style="color: #1565c0; margin-bottom: 10px;">🔒 Kelola Kode Teknisi</h4>
             <input type="text" id="newTechName" placeholder="Nama Lengkap Teknisi" style="margin-bottom: 8px;">
-            <input type="text" id="newTechCode" placeholder="Kode Akses Unik (misal: TEK001)">
-            <button class="btn" onclick="registerTechnicianWithAuth()" style="margin-top: 8px; background-color: #2e7d32;">Daftarkan Teknisi Baru</button>
-        </div>
-
-        <!-- Tabel Daftar Teknisi Terdaftar -->
-        <div class="form-group">
-            <h4 style="color: #1565c0; margin-bottom: 5px;">Daftar Teknisi Terdaftar:</h4>
+            <input type="text" id="newTechCode" placeholder="Kode Akses Unik (misal: TEK001)" style="margin-bottom: 8px;">
+            <button type="button" class="btn" onclick="registerTechnicianWithAuth()" style="background-color: #2e7d32;">Daftarkan Teknisi</button>
+            
+            <h5 style="color: #333; margin-top: 15px;">Daftar Teknisi Aktif:</h5>
             <table>
                 <thead>
                     <tr>
@@ -422,97 +412,347 @@
                     </tr>
                 </thead>
                 <tbody id="technicianTableBody">
-                    <!-- Data teknisi dimuat dinamis -->
+                    <tr><td colspan="3" style="text-align:center;">Memuat data...</td></tr>
                 </tbody>
             </table>
         </div>
 
-        <button class="btn btn-secondary" onclick="closeAdminPanel()">Kembali ke Halaman Utama</button>
+        <!-- DASBOR LAPORAN & FILTER WAKTU (1 BULAN / 1 TAHUN) -->
+        <div class="form-group" style="margin-top: 15px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;">
+                <h4 style="color: #1565c0;">📊 Riwayat & Lembar Laporan Kerja</h4>
+                <div>
+                    <button type="button" onclick="downloadReportsCSV()" style="background: #2e7d32; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8em; margin-right: 5px;">📥 Export CSV</button>
+                    <button type="button" onclick="window.print()" style="background: #0288d1; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8em;">🖨️ Cetak PDF / Print</button>
+                </div>
+            </div>
+
+            <!-- FILTER WAKTU LENGKAP -->
+            <div class="filter-bar">
+                <div style="flex: 1; min-width: 200px;">
+                    <label for="filterMode" style="font-size: 0.8em; margin-bottom: 2px;">Rentang Waktu:</label>
+                    <select id="filterMode" onchange="toggleFilterMode()" style="padding: 6px;">
+                        <option value="date">Pilih Tanggal Spesifik</option>
+                        <option value="month">1 Bulan Terakhir (Bulan Ini)</option>
+                        <option value="year">1 Tahun Terakhir (Tahun Ini)</option>
+                        <option value="all">Semua Riwayat Laporan</option>
+                    </select>
+                </div>
+                <div id="dateInputWrapper" style="flex: 1; min-width: 150px;">
+                    <label for="filterDate" style="font-size: 0.8em; margin-bottom: 2px;">Tanggal:</label>
+                    <input type="date" id="filterDate" onchange="renderReportsList()" style="padding: 5px 8px;">
+                </div>
+            </div>
+
+            <div id="reportsContainer" style="max-height: 450px; overflow-y: auto; border: 1px solid #e0e0e0; padding: 10px; border-radius: 6px;">
+                <p style="text-align: center; color: #777;">Memuat laporan...</p>
+            </div>
+
+            <button type="button" id="clearReportBtn" class="btn btn-danger" onclick="clearAllReportsWithAuth()" style="margin-top: 15px;">⚠️ Bersihkan / Hapus Semua Laporan</button>
+        </div>
+
+        <button type="button" class="btn btn-secondary" onclick="closeAdminPanel()">Kembali ke Halaman Awal</button>
     </div>
 
     <script>
-        // DAFTAR PASSWORD SISTEM
         const ADMIN_PANEL_PASSWORD = "admin";
         const LOGO_CHANGE_PASSWORD = "logo@1234#";
         const TECH_MGMT_PASSWORD = "Elhajj@1234#";
+        const CLEAR_REPORTS_PASSWORD = "Elhajj@12345#";
 
-        // Database Sementara Teknisi
-        let technicians = [
-            { code: "TEK01", name: "Budi Santoso" },
-            { code: "TEK02", name: "Ahmad Faisal" },
-            { code: "TEK03", name: "Rian Hidayat" }
-        ];
+        let techniciansData = {};
+        let reportsData = {};
+        let currentLogoUrl = "https://via.placeholder.com/260x120?text=Logo+Perusahaan";
 
-        // Daftar Pekerjaan Prioritas
-        let priorityTasks = [
-            { task: "Perbaikan Utama Genset Gedung B", level: "Darurat/Tinggi" },
-            { task: "Maintenance Rutin Router Lantai 2", level: "Sedang" }
-        ];
+        let imgBeforeBase64 = "";
+        let imgAfterBase64 = "";
 
-        // Splash Screen Timer (Hilang Otomatis setelah 2.5 Detik)
         window.addEventListener('load', () => {
-            setTimeout(() => {
-                const splash = document.getElementById('splashScreen');
-                splash.classList.add('fade-out');
-            }, 2500);
+            const todayISO = new Date().toISOString().slice(0, 10);
+            document.getElementById('jobDate').value = todayISO;
+            document.getElementById('filterDate').value = todayISO;
+
+            let attempts = 0;
+            const checkFirebase = setInterval(() => {
+                attempts++;
+                if (window.db) {
+                    clearInterval(checkFirebase);
+                    initRealtimeSync();
+                } else if (attempts > 20) {
+                    clearInterval(checkFirebase);
+                    alert("Koneksi ke Firebase lambat atau bermasalah. Periksa koneksi internet Anda.");
+                }
+            }, 300);
+
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('todayDate').innerText = new Date().toLocaleDateString('id-ID', options);
         });
 
-        // Format Tanggal Hari Ini
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('todayDate').innerText = new Date().toLocaleDateString('id-ID', options);
+        function initRealtimeSync() {
+            if (!window.db) return;
 
-        // Render List Prioritas ke Form Teknisi
-        function renderPriorityTasks() {
-            const container = document.getElementById('priorityListContainer');
-            container.innerHTML = '';
-            if (priorityTasks.length === 0) {
-                container.innerHTML = '<p style="font-size:0.8em; color:#777;">Tidak ada pekerjaan darurat saat ini.</p>';
-                return;
-            }
-            priorityTasks.forEach((item, index) => {
-                const badgeClass = item.level === 'Darurat/Tinggi' ? 'badge-urgent' : 'badge-medium';
-                const div = document.createElement('div');
-                div.className = 'priority-item';
-                div.innerHTML = `
-                    <span style="font-size: 0.85em; font-weight: 600;">${index + 1}. ${item.task}</span>
-                    <span class="${badgeClass}">${item.level}</span>
-                `;
-                container.appendChild(div);
+            // Sync Logo
+            const logoRef = window.dbRef(window.db, 'settings/logoUrl');
+            window.dbOnValue(logoRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    currentLogoUrl = snapshot.val();
+                    applyLogoToAll(currentLogoUrl);
+                }
+            });
+
+            // Sync Teknisi
+            const techsRef = window.dbRef(window.db, 'technicians');
+            window.dbOnValue(techsRef, (snapshot) => {
+                techniciansData = snapshot.val() || {};
+                renderTechnicianTable();
+            });
+
+            // Sync Laporan
+            const reportsRef = window.dbRef(window.db, 'reports');
+            window.dbOnValue(reportsRef, (snapshot) => {
+                reportsData = snapshot.val() || {};
+                renderReportsList();
             });
         }
-        renderPriorityTasks();
 
-        // Render Tabel Teknisi (Dengan Tombol Hapus)
+        function applyLogoToAll(logoUrl) {
+            document.getElementById('mainLogoImg').src = logoUrl;
+            document.getElementById('loginLogoImg').src = logoUrl;
+            document.getElementById('appLogo').src = logoUrl;
+        }
+
         function renderTechnicianTable() {
             const tbody = document.getElementById('technicianTableBody');
             tbody.innerHTML = '';
-            technicians.forEach((tech, index) => {
+
+            const keys = Object.keys(techniciansData);
+            if (keys.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:#777;">Belum ada teknisi terdaftar.</td></tr>';
+                return;
+            }
+
+            keys.forEach(key => {
+                const tech = techniciansData[key];
+                if (!tech || typeof tech !== 'object') return;
+
+                const name = tech.name || 'Tanpa Nama';
+                const code = tech.code || key;
+
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${tech.name}</td>
-                    <td><strong>${tech.code}</strong></td>
-                    <td><button class="btn-danger" onclick="deleteTechnicianWithAuth(${index})">Hapus</button></td>
+                    <td>${name}</td>
+                    <td><strong>${code}</strong></td>
+                    <td><button type="button" class="btn-danger" onclick="deleteTechnicianWithAuth('${key}')">Hapus</button></td>
                 `;
                 tbody.appendChild(tr);
             });
         }
-        renderTechnicianTable();
 
-        // Check Login Kode Teknisi
-        function checkAccessCode() {
-            const inputCode = document.getElementById('accessCodeInput').value.trim();
-            const foundTech = technicians.find(t => t.code.toLowerCase() === inputCode.toLowerCase());
-
-            if (foundTech) {
-                document.getElementById('techName').value = foundTech.name;
-                document.getElementById('loginSection').classList.add('hidden');
-                document.getElementById('reportSection').classList.remove('hidden');
+        function toggleFilterMode() {
+            const mode = document.getElementById('filterMode').value;
+            const dateWrapper = document.getElementById('dateInputWrapper');
+            if (mode === 'date') {
+                dateWrapper.style.display = 'block';
             } else {
-                alert('Kode akses tidak ditemukan! Silakan hubungi Admin untuk pendaftaran.');
+                dateWrapper.style.display = 'none';
+            }
+            renderReportsList();
+        }
+
+        function renderReportsList() {
+            const container = document.getElementById('reportsContainer');
+            container.innerHTML = '';
+
+            const filterMode = document.getElementById('filterMode').value;
+            const selectedDate = document.getElementById('filterDate').value;
+            const now = new Date();
+
+            const keys = Object.keys(reportsData);
+            if (keys.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #777; padding: 20px;">Belum ada laporan kerja tersimpan di database.</p>';
+                return;
+            }
+
+            let filteredCount = 0;
+
+            keys.reverse().forEach(key => {
+                const r = reportsData[key];
+                if (!r || typeof r !== 'object') return;
+
+                const rDateStr = r.jobDate || ''; // Format YYYY-MM-DD
+                
+                if (filterMode === 'date' && rDateStr !== selectedDate) {
+                    return;
+                } else if (filterMode === 'month') {
+                    // Cek apakah dalam 1 bulan terakhir / bulan yang sama
+                    const reportDate = new Date(rDateStr);
+                    if (reportDate.getFullYear() !== now.getFullYear() || reportDate.getMonth() !== now.getMonth()) {
+                        return;
+                    }
+                } else if (filterMode === 'year') {
+                    // Cek apakah dalam tahun yang sama
+                    const reportDate = new Date(rDateStr);
+                    if (reportDate.getFullYear() !== now.getFullYear()) {
+                        return;
+                    }
+                }
+
+                filteredCount++;
+
+                let badgeClass = 'bg-biasa';
+                if (r.priority === 'Sedang') badgeClass = 'bg-sedang';
+                if (r.priority && r.priority.includes('Darurat')) badgeClass = 'bg-darurat';
+
+                const card = document.createElement('div');
+                card.className = 'report-card';
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <strong>Teknisi: ${r.techName || '-'}</strong>
+                        <span class="badge ${badgeClass}">${r.priority || 'Biasa'}</span>
+                    </div>
+                    <small style="color: #666;">Tanggal Kerja: ${rDateStr} | Dikirim: ${r.timestamp || '-'}</small>
+                    <p style="margin-top: 6px; font-size: 0.9em;"><strong>Detail Tugas:</strong> ${r.description || '-'}</p>
+                    <div class="report-photos">
+                        <div>
+                            <small style="display:block; text-align:center;">Sebelum</small>
+                            <img src="${r.photoBefore || 'https://via.placeholder.com/100x80?text=No+Photo'}" alt="Before">
+                        </div>
+                        <div>
+                            <small style="display:block; text-align:center;">Sesudah</small>
+                            <img src="${r.photoAfter || 'https://via.placeholder.com/100x80?text=No+Photo'}" alt="After">
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            if (filteredCount === 0) {
+                container.innerHTML = `<p style="text-align: center; color: #777; padding: 20px 0;">Tidak ada laporan pada rentang waktu yang dipilih.</p>`;
             }
         }
 
-        // Preview Foto
+        function checkAccessCode() {
+            const rawCode = document.getElementById('accessCodeInput').value.trim();
+            if (!rawCode) {
+                alert('Harap masukkan kode akses Anda!');
+                return;
+            }
+
+            let foundTech = null;
+            Object.keys(techniciansData).forEach(key => {
+                const tech = techniciansData[key];
+                if (tech && typeof tech === 'object') {
+                    const storedCode = String(tech.code || key).trim().toLowerCase();
+                    if (storedCode === rawCode.toLowerCase()) {
+                        foundTech = tech;
+                    }
+                }
+            });
+
+            if (foundTech) {
+                document.getElementById('techName').value = foundTech.name || 'Teknisi';
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('reportSection').classList.remove('hidden');
+            } else {
+                alert('Kode akses salah atau belum terdaftar! Silakan hubungi Admin.');
+            }
+        }
+
+        function updateLogoWithAuth() {
+            const newLogoUrl = document.getElementById('logoUrl').value.trim();
+            if (!newLogoUrl) {
+                alert('Masukkan URL gambar logo baru!');
+                return;
+            }
+
+            const pwd = prompt("Masukkan Password Keamanan Ubah Logo:");
+            if (pwd === LOGO_CHANGE_PASSWORD) {
+                window.dbSet(window.dbRef(window.db, 'settings/logoUrl'), newLogoUrl)
+                    .then(() => {
+                        alert('✅ Logo perusahaan berhasil diperbarui!');
+                        document.getElementById('logoUrl').value = '';
+                    })
+                    .catch(err => alert('Gagal menyimpan logo: ' + err.message));
+            } else if (pwd !== null) {
+                alert('Password Ubah Logo salah!');
+            }
+        }
+
+        function registerTechnicianWithAuth() {
+            const name = document.getElementById('newTechName').value.trim();
+            const code = document.getElementById('newTechCode').value.trim().toUpperCase();
+
+            if (!name || !code) {
+                alert('Harap isi Nama Lengkap Teknisi dan Kode Akses Unik!');
+                return;
+            }
+
+            const pwd = prompt("Masukkan Password Keamanan Kelola Teknisi:");
+            if (pwd === TECH_MGMT_PASSWORD) {
+                const targetRef = window.dbRef(window.db, 'technicians/' + code);
+                window.dbSet(targetRef, { name: name, code: code })
+                    .then(() => {
+                        alert(`✅ Teknisi "${name}" berhasil didaftarkan!`);
+                        document.getElementById('newTechName').value = '';
+                        document.getElementById('newTechCode').value = '';
+                    })
+                    .catch(err => alert('Gagal menyimpan: ' + err.message));
+            } else if (pwd !== null) {
+                alert('Password salah!');
+            }
+        }
+
+        function deleteTechnicianWithAuth(key) {
+            if (confirm(`Hapus teknisi ini dari sistem?`)) {
+                const pwd = prompt("Masukkan Password Keamanan Kelola Teknisi:");
+                if (pwd === TECH_MGMT_PASSWORD) {
+                    window.dbRemove(window.dbRef(window.db, 'technicians/' + key))
+                        .then(() => alert('✅ Data teknisi berhasil dihapus.'))
+                        .catch(err => alert('Gagal menghapus: ' + err.message));
+                } else if (pwd !== null) {
+                    alert('Password salah!');
+                }
+            }
+        }
+
+        function clearAllReportsWithAuth() {
+            const pwd = prompt("Masukkan Password Keamanan Bersihkan Data Laporan:");
+            if (pwd === CLEAR_REPORTS_PASSWORD) {
+                if (confirm("Apakah Anda yakin ingin MENGHAPUS SEMUA LAPORAN di database?")) {
+                    window.dbRemove(window.dbRef(window.db, 'reports'))
+                        .then(() => alert("✅ Seluruh data laporan berhasil dibersihkan!"))
+                        .catch(err => alert('Gagal membersihkan: ' + err.message));
+                }
+            } else if (pwd !== null) {
+                alert("Password salah!");
+            }
+        }
+
+        function downloadReportsCSV() {
+            const keys = Object.keys(reportsData);
+            if (keys.length === 0) {
+                alert("Belum ada laporan untuk diunduh!");
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,Nama Teknisi,Tanggal Kerja,Prioritas,Detail Tugas,Waktu Kirim\n";
+            keys.forEach(k => {
+                const r = reportsData[k];
+                if (r) {
+                    const cleanDesc = `"${(r.description || '').replace(/"/g, '""')}"`;
+                    csvContent += `${r.techName || ''},${r.jobDate || ''},${r.priority || ''},${cleanDesc},${r.timestamp || ''}\n`;
+                }
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Laporan_Teknisi_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
         function previewImage(input, previewId) {
             const preview = document.getElementById(previewId);
             if (input.files && input.files[0]) {
@@ -520,151 +760,94 @@
                 reader.onload = function(e) {
                     preview.src = e.target.result;
                     preview.style.display = 'block';
+
+                    if (previewId === 'prevBefore') imgBeforeBase64 = e.target.result;
+                    if (previewId === 'prevAfter') imgAfterBase64 = e.target.result;
                 }
                 reader.readAsDataURL(input.files[0]);
             }
         }
 
-        // Minta Izin Notifikasi Browser
-        function requestNotificationPermission() {
-            if ("Notification" in window) {
-                Notification.requestPermission().then(permission => {
-                    if (permission === "granted") {
-                        alert("Izin Notifikasi Pop-up Aktif!");
-                    } else {
-                        alert("Izin Notifikasi Ditolak.");
-                    }
+        function submitForm(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('btnSubmitReport');
+            submitBtn.innerText = "Mengirim...";
+            submitBtn.disabled = true;
+
+            const newReport = {
+                techName: document.getElementById('techName').value,
+                jobDate: document.getElementById('jobDate').value,
+                priority: document.getElementById('jobPriority').value,
+                description: document.getElementById('jobDescription').value,
+                photoBefore: imgBeforeBase64,
+                photoAfter: imgAfterBase64,
+                timestamp: new Date().toLocaleString('id-ID')
+            };
+
+            const reportsListRef = window.dbRef(window.db, 'reports');
+            const newReportRef = window.dbPush(reportsListRef);
+            
+            window.dbSet(newReportRef, newReport)
+                .then(() => {
+                    const notify = document.getElementById('successNotification');
+                    notify.style.display = 'block';
+                    setTimeout(() => { notify.style.display = 'none'; }, 6000);
+
+                    document.getElementById('techForm').reset();
+                    document.getElementById('prevBefore').style.display = 'none';
+                    document.getElementById('prevAfter').style.display = 'none';
+                    document.getElementById('jobDate').value = new Date().toISOString().slice(0, 10);
+                    imgBeforeBase64 = "";
+                    imgAfterBase64 = "";
+                })
+                .catch((err) => {
+                    alert('Gagal mengirim laporan: ' + err.message);
+                })
+                .finally(() => {
+                    submitBtn.innerText = "Kirim Laporan Sekarang";
+                    submitBtn.disabled = false;
                 });
-            }
         }
 
-        // Kirim Notifikasi ke Server / Admin
-        function sendServerNotification(techName, jobDesc, priority) {
-            if ("Notification" in window && Notification.permission === "granted") {
-                new Notification(`🔔 Laporan Baru dari ${techName}`, {
-                    body: `[Prioritas: ${priority}] ${jobDesc}`,
-                    icon: document.getElementById('appLogo').src
-                });
-            }
+        function goToLoginSection() {
+            document.getElementById('splashSection').classList.add('hidden');
+            document.getElementById('loginSection').classList.remove('hidden');
         }
 
-        // Kirim Form Laporan Kerja
-        function submitForm(event) {
-            event.preventDefault();
-            const name = document.getElementById('techName').value;
-            const desc = document.getElementById('jobDescription').value;
-            const priority = document.getElementById('jobPriority').value;
-
-            sendServerNotification(name, desc, priority);
-
-            alert(`✅ Laporan atas nama ${name} berhasil dikirim ke server admin!`);
-            document.getElementById('techForm').reset();
-            document.getElementById('prevBefore').style.display = 'none';
-            document.getElementById('prevAfter').style.display = 'none';
+        function goToSplash() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('splashSection').classList.remove('hidden');
         }
 
-        // Logout
-        function logout() {
+        function switchAccount() {
             document.getElementById('accessCodeInput').value = '';
+            document.getElementById('techForm').reset();
             document.getElementById('reportSection').classList.add('hidden');
             document.getElementById('loginSection').classList.remove('hidden');
         }
 
-        // Panel Admin Login
+        function logoutApp() {
+            document.getElementById('accessCodeInput').value = '';
+            document.getElementById('techForm').reset();
+            document.getElementById('reportSection').classList.add('hidden');
+            document.getElementById('splashSection').classList.remove('hidden');
+        }
+
         function showAdminLogin() {
-            const pwd = prompt("Masukkan Kata Sandi Panel Admin:");
+            const pwd = prompt("Masukkan Password Panel Admin:");
             if (pwd === ADMIN_PANEL_PASSWORD) {
-                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('splashSection').classList.add('hidden');
                 document.getElementById('adminSection').classList.remove('hidden');
             } else if (pwd !== null) {
-                alert("Kata sandi Panel Admin salah!");
+                alert("Password Panel Admin salah!");
             }
         }
 
         function closeAdminPanel() {
             document.getElementById('adminSection').classList.add('hidden');
-            document.getElementById('loginSection').classList.remove('hidden');
-        }
-
-        // Fitur Admin: Tambah Task Prioritas
-        function addPriorityTask() {
-            const taskText = document.getElementById('newPriorityTask').value.trim();
-            const taskLevel = document.getElementById('newPriorityLevel').value;
-
-            if (taskText !== '') {
-                priorityTasks.unshift({ task: taskText, level: taskLevel });
-                renderPriorityTasks();
-                document.getElementById('newPriorityTask').value = '';
-                alert('Tugas prioritas baru berhasil ditambahkan!');
-            } else {
-                alert('Tuliskan rincian tugas prioritas terlebih dahulu.');
-            }
-        }
-
-        // Fitur Admin: Ubah Logo Perusahaan (Password: logo@1234#)
-        function updateLogoWithAuth() {
-            const newLogoUrl = document.getElementById('logoUrl').value.trim();
-            if (newLogoUrl === '') {
-                alert('Masukkan URL gambar logo yang valid terlebih dahulu.');
-                return;
-            }
-
-            const pwd = prompt("Masukkan Password Keamanan Ubah Logo:");
-            if (pwd === LOGO_CHANGE_PASSWORD) {
-                document.getElementById('appLogo').src = newLogoUrl;
-                document.getElementById('splashLogoImg').src = newLogoUrl;
-                alert('Logo perusahaan & Splash Screen berhasil diperbarui!');
-                document.getElementById('logoUrl').value = '';
-            } else if (pwd !== null) {
-                alert('Password Ubah Logo Salah!');
-            }
-        }
-
-        // Fitur Admin: Tambah Teknisi Baru (Password: Elhajj@1234#)
-        function registerTechnicianWithAuth() {
-            const name = document.getElementById('newTechName').value.trim();
-            const code = document.getElementById('newTechCode').value.trim();
-
-            if (!name || !code) {
-                alert('Harap isi Nama Teknisi dan Kode Akses!');
-                return;
-            }
-
-            if (technicians.some(t => t.code.toLowerCase() === code.toLowerCase())) {
-                alert('Kode akses tersebut sudah digunakan oleh teknisi lain!');
-                return;
-            }
-
-            const pwd = prompt("Masukkan Password Keamanan Kelola Teknisi:");
-            if (pwd === TECH_MGMT_PASSWORD) {
-                technicians.push({ code: code, name: name });
-                renderTechnicianTable();
-                
-                document.getElementById('newTechName').value = '';
-                document.getElementById('newTechCode').value = '';
-                alert(`Teknisi ${name} berhasil terdaftar dengan kode: ${code}`);
-            } else if (pwd !== null) {
-                alert('Password Kelola Teknisi Salah!');
-            }
-        }
-
-        // Fitur Admin: Hapus Teknisi (Password: Elhajj@1234#)
-        function deleteTechnicianWithAuth(index) {
-            const targetTech = technicians[index];
-            const confirmDelete = confirm(`Apakah Anda yakin ingin menghapus teknisi ${targetTech.name} (${targetTech.code})?`);
-            
-            if (confirmDelete) {
-                const pwd = prompt("Masukkan Password Keamanan Kelola Teknisi untuk Menghapus:");
-                if (pwd === TECH_MGMT_PASSWORD) {
-                    technicians.splice(index, 1);
-                    renderTechnicianTable();
-                    alert(`Teknisi ${targetTech.name} berhasil dihapus.`);
-                } else if (pwd !== null) {
-                    alert('Password Kelola Teknisi Salah! Menghapus teknisi dibatalkan.');
-                }
-            }
+            document.getElementById('splashSection').classList.remove('hidden');
         }
     </script>
 </body>
 </html>
-
