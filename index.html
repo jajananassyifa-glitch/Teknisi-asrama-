@@ -17,7 +17,6 @@
         }
     </style>
 </head>
-<!-- Latar Belakang Putih & Biru Sangat Muda -->
 <body class="bg-slate-50 text-slate-800 min-h-screen font-sans flex flex-col relative">
 
     <!-- Toast Notification -->
@@ -29,7 +28,7 @@
         </div>
     </div>
 
-    <!-- Header Navigation (Putih Bersih) -->
+    <!-- Header Navigation -->
     <header class="bg-white border-b border-sky-100 sticky top-0 z-40 no-print shadow-sm">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center gap-3">
@@ -54,10 +53,9 @@
     <!-- Main Container -->
     <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6">
 
-        <!-- ================= MODE TEKNISI ================= -->
+        <!-- MODE TEKNISI -->
         <section id="tech-section" class="space-y-6">
 
-            <!-- Welcome Screen with Logo & Code Entry -->
             <div id="tech-welcome-card" class="max-w-md mx-auto bg-white border border-sky-200 rounded-3xl p-6 md:p-8 shadow-xl text-center space-y-6">
                 <div class="flex justify-center">
                     <img id="welcome-logo" src="https://via.placeholder.com/120/0284c7/ffffff?text=LOGO" alt="Logo Hotel Grand Elhajj" class="w-24 h-24 object-contain rounded-2xl border border-sky-200 p-2 bg-white shadow-sm">
@@ -85,14 +83,11 @@
                 </form>
             </div>
 
-            <!-- Dashboard Input Teknisi -->
+            <!-- Form Teknisi -->
             <div id="tech-form-card" class="hidden space-y-6">
-                <!-- Info Profile & Foto Teknisi -->
                 <div class="bg-white border border-sky-200 rounded-3xl p-5 shadow-lg flex flex-wrap justify-between items-center gap-4">
                     <div class="flex items-center gap-4">
-                        <div class="relative">
-                            <img id="active-tech-photo" src="https://via.placeholder.com/100/0284c7/ffffff?text=FOTO" alt="Foto Teknisi" class="w-16 h-16 rounded-2xl object-cover border-2 border-sky-200 shadow-sm bg-sky-50">
-                        </div>
+                        <img id="active-tech-photo" src="https://via.placeholder.com/100/0284c7/ffffff?text=FOTO" class="w-16 h-16 rounded-2xl object-cover border-2 border-sky-200 shadow-sm bg-sky-50">
                         <div>
                             <span class="text-[11px] text-sky-600 font-bold uppercase tracking-wider">Teknisi Bertugas</span>
                             <h3 id="active-tech-name" class="text-lg font-bold text-sky-950">--</h3>
@@ -104,15 +99,13 @@
                     </button>
                 </div>
 
-                <!-- Priority Tasks Alert -->
                 <div class="bg-amber-50 border border-amber-200 rounded-3xl p-5 shadow-sm">
                     <h4 class="text-xs font-bold text-amber-800 uppercase tracking-wider flex items-center gap-2 mb-2">
-                        <i class="fa-solid fa-circle-exclamation text-amber-500 text-sm"></i> Daftar Pekerjaan yang Harus Didahulukan
+                        <i class="fa-solid fa-circle-exclamation text-amber-500 text-sm"></i> Pekerjaan Prioritas
                     </h4>
-                    <p id="priority-task-text" class="text-sm text-amber-950 whitespace-pre-line font-medium leading-relaxed">Belum ada prioritas pekerjaan khusus dari Admin.</p>
+                    <p id="priority-task-text" class="text-sm text-amber-950 whitespace-pre-line font-medium leading-relaxed">Loading prioritas...</p>
                 </div>
 
-                <!-- Input Form Laporan Kerja -->
                 <div class="bg-white border border-sky-200 rounded-3xl p-6 shadow-xl">
                     <h3 class="text-base font-bold text-sky-950 mb-5 flex items-center gap-2 border-b border-sky-100 pb-3">
                         <i class="fa-solid fa-pen-to-square text-sky-500"></i> Buat Laporan Kerja Baru
@@ -121,37 +114,29 @@
                         <div>
                             <label class="block text-xs font-bold text-sky-900 mb-1.5">Judul / Lokasi Pekerjaan</label>
                             <input type="text" id="work-title" required placeholder="Contoh: Perbaikan AC Kamar 304" 
-                                class="w-full bg-sky-50/60 border border-sky-200 rounded-2xl px-4 py-3 text-sky-950 focus:outline-none focus:ring-2 focus:ring-sky-400 text-sm placeholder-sky-400">
+                                class="w-full bg-sky-50/60 border border-sky-200 rounded-2xl px-4 py-3 text-sky-950 focus:outline-none focus:ring-2 focus:ring-sky-400 text-sm">
                         </div>
 
-                        <!-- Foto Sebelum & Sesudah -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="bg-sky-50/70 p-4 rounded-2xl border border-sky-200">
-                                <label class="block text-xs font-bold text-amber-800 mb-2">
-                                    <i class="fa-solid fa-camera mr-1"></i> Foto Sebelum (Before)
-                                </label>
-                                <input type="file" id="photo-before" accept="image/*" required onchange="previewImage(this, 'preview-before')" 
-                                    class="text-xs text-sky-800 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:bg-sky-500 file:text-white file:font-semibold">
-                                <img id="preview-before" class="mt-3 hidden rounded-xl max-h-40 w-full object-cover border border-sky-200 shadow-sm">
+                                <label class="block text-xs font-bold text-amber-800 mb-2"><i class="fa-solid fa-camera mr-1"></i> Foto Sebelum (Before)</label>
+                                <input type="file" id="photo-before" accept="image/*" required onchange="previewImage(this, 'preview-before')" class="text-xs text-sky-800 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:bg-sky-500 file:text-white">
+                                <img id="preview-before" class="mt-3 hidden rounded-xl max-h-40 w-full object-cover border border-sky-200">
                             </div>
 
                             <div class="bg-sky-50/70 p-4 rounded-2xl border border-sky-200">
-                                <label class="block text-xs font-bold text-emerald-800 mb-2">
-                                    <i class="fa-solid fa-camera mr-1"></i> Foto Sesudah (After)
-                                </label>
-                                <input type="file" id="photo-after" accept="image/*" required onchange="previewImage(this, 'preview-after')" 
-                                    class="text-xs text-sky-800 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:bg-sky-500 file:text-white file:font-semibold">
-                                <img id="preview-after" class="mt-3 hidden rounded-xl max-h-40 w-full object-cover border border-sky-200 shadow-sm">
+                                <label class="block text-xs font-bold text-emerald-800 mb-2"><i class="fa-solid fa-camera mr-1"></i> Foto Sesudah (After)</label>
+                                <input type="file" id="photo-after" accept="image/*" required onchange="previewImage(this, 'preview-after')" class="text-xs text-sky-800 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:bg-sky-500 file:text-white">
+                                <img id="preview-after" class="mt-3 hidden rounded-xl max-h-40 w-full object-cover border border-sky-200">
                             </div>
                         </div>
 
                         <div>
                             <label class="block text-xs font-bold text-sky-900 mb-1.5">Catatan Teknisi / Tindakan</label>
-                            <textarea id="work-notes" rows="3" required placeholder="Jelaskan detail perbaikan, sparepart yang diganti, atau kendala..." 
-                                class="w-full bg-sky-50/60 border border-sky-200 rounded-2xl p-4 text-sky-950 focus:outline-none focus:ring-2 focus:ring-sky-400 text-sm placeholder-sky-400"></textarea>
+                            <textarea id="work-notes" rows="3" required placeholder="Jelaskan detail perbaikan..." class="w-full bg-sky-50/60 border border-sky-200 rounded-2xl p-4 text-sky-950 focus:outline-none focus:ring-2 focus:ring-sky-400 text-sm"></textarea>
                         </div>
 
-                        <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3.5 rounded-2xl shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2">
+                        <button type="submit" id="btn-submit-report" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3.5 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2">
                             <i class="fa-solid fa-paper-plane"></i> Kirim Laporan Kerja
                         </button>
                     </form>
@@ -159,15 +144,13 @@
             </div>
         </section>
 
-        <!-- ================= MODE ADMIN ================= -->
+        <!-- MODE ADMIN -->
         <section id="admin-section" class="hidden space-y-6">
-
-            <!-- Admin Action Toolbar -->
             <div class="no-print bg-white border border-sky-200 rounded-3xl p-6 shadow-xl space-y-4">
                 <div class="flex flex-wrap justify-between items-center gap-4 border-b border-sky-100 pb-4">
                     <div>
                         <h2 class="text-lg font-bold text-sky-950">Dashboard Kontrol Admin</h2>
-                        <p class="text-xs text-sky-600">Pengaturan Logo, Teknisi, Pekerjaan Utama, & Arsip Laporan</p>
+                        <p class="text-xs text-sky-600">Terhubung Realtime Database Firebase</p>
                     </div>
                     <button onclick="window.print()" class="bg-sky-500 hover:bg-sky-600 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow transition">
                         <i class="fa-solid fa-print mr-1"></i> Cetak / Export PDF
@@ -190,163 +173,102 @@
                 </div>
             </div>
 
-            <!-- Daftar Teknisi Terdaftar -->
             <div class="no-print bg-white border border-sky-200 rounded-3xl p-6 shadow-xl">
-                <h3 class="text-sm font-bold text-sky-950 mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-users text-sky-500"></i> Daftar Teknisi Terdaftar & Foto
-                </h3>
-                <div id="tech-list-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                    <!-- Dynamic List -->
-                </div>
+                <h3 class="text-sm font-bold text-sky-950 mb-4 flex items-center gap-2"><i class="fa-solid fa-users text-sky-500"></i> Daftar Teknisi Terdaftar</h3>
+                <div id="tech-list-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
             </div>
 
-            <!-- Arsip Laporan Kerja -->
             <div class="space-y-4">
-                <h3 class="no-print text-base font-bold text-sky-950 flex items-center gap-2">
-                    <i class="fa-solid fa-folder-open text-sky-500"></i> Seluruh Arsip Laporan Pekerjaan
-                </h3>
-
-                <div id="reports-container" class="space-y-6">
-                    <!-- Dynamic Reports -->
-                </div>
+                <h3 class="no-print text-base font-bold text-sky-950 flex items-center gap-2"><i class="fa-solid fa-folder-open text-sky-500"></i> Seluruh Arsip Laporan Pekerjaan (Realtime Online)</h3>
+                <div id="reports-container" class="space-y-6"></div>
             </div>
         </section>
 
     </main>
 
-    <!-- Modal Admin Login Password -->
+    <!-- Modal Admin Auth -->
     <div id="modal-admin-auth" class="fixed inset-0 bg-slate-900/30 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
         <div class="bg-white border border-sky-200 rounded-3xl p-6 max-w-sm w-full shadow-2xl space-y-4 text-center">
-            <div class="w-12 h-12 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center mx-auto text-xl">
-                <i class="fa-solid fa-user-shield"></i>
-            </div>
-            <div>
-                <h3 class="font-bold text-sky-950 text-base">Verifikasi Mode Admin</h3>
-                <p class="text-xs text-sky-600 mt-1">Masukkan password khusus Admin untuk membuka kontrol penuh.</p>
-            </div>
+            <h3 class="font-bold text-sky-950 text-base">Verifikasi Mode Admin</h3>
             <form onsubmit="handleAdminLogin(event)" class="space-y-3">
-                <input type="password" id="admin-pass-input" required placeholder="Masukkan password Admin" class="w-full bg-sky-50 border border-sky-200 rounded-xl p-3 text-sky-950 text-sm text-center focus:outline-none focus:ring-2 focus:ring-sky-400">
-                <p class="text-[10px] text-sky-500">*Sandi khusus admin: <code class="text-sky-700 font-mono font-bold">adnin@1234#</code></p>
+                <input type="password" id="admin-pass-input" required placeholder="Password Admin" class="w-full bg-sky-50 border border-sky-200 rounded-xl p-3 text-sky-950 text-sm text-center">
+                <p class="text-[10px] text-sky-500">*Password: <code class="text-sky-700 font-bold">adnin@1234#</code></p>
                 <div class="flex gap-2 pt-2">
                     <button type="button" onclick="closeModal('modal-admin-auth')" class="w-1/2 bg-sky-100 text-sky-800 py-2.5 rounded-xl text-xs font-semibold">Batal</button>
-                    <button type="submit" class="w-1/2 bg-sky-500 hover:bg-sky-600 text-white py-2.5 rounded-xl text-xs font-semibold">Masuk Mode Admin</button>
+                    <button type="submit" class="w-1/2 bg-sky-500 hover:bg-sky-600 text-white py-2.5 rounded-xl text-xs font-semibold">Masuk</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Modal Ganti Logo (logo@1234#) -->
+    <!-- Modals Lainya -->
     <div id="modal-logo" class="fixed inset-0 bg-slate-900/30 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
         <div class="bg-white border border-sky-200 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4">
-            <div class="flex justify-between items-center border-b border-sky-100 pb-3">
-                <h3 class="font-bold text-sky-950 text-sm">Ganti Logo Hotel</h3>
-                <button onclick="closeModal('modal-logo')" class="text-sky-400 hover:text-sky-700"><i class="fa-solid fa-xmark"></i></button>
-            </div>
+            <h3 class="font-bold text-sky-950 text-sm">Ganti Logo Hotel</h3>
             <form onsubmit="handleSaveLogo(event)" class="space-y-3">
-                <div>
-                    <label class="block text-xs font-bold text-sky-900 mb-1">Pilih Logo Baru</label>
-                    <input type="file" id="input-logo-file" accept="image/*" required class="text-xs text-sky-800 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:bg-sky-500 file:text-white">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-amber-800 mb-1">Password Verifikasi Logo</label>
-                    <input type="password" id="pass-logo" required placeholder="Masukkan password logo" class="w-full bg-sky-50 border border-sky-200 rounded-xl p-2.5 text-sky-950 text-sm">
-                    <p class="text-[10px] text-sky-500 mt-1">*Sandi khusus logo: <code class="text-amber-700 font-bold">logo@1234#</code></p>
-                </div>
-                <div class="flex gap-2 pt-2">
-                    <button type="button" onclick="closeModal('modal-logo')" class="w-1/2 bg-sky-100 text-sky-800 py-2.5 rounded-xl text-xs font-semibold">Batal</button>
-                    <button type="submit" class="w-1/2 bg-sky-500 hover:bg-sky-600 text-white py-2.5 rounded-xl text-xs font-semibold">Simpan Logo</button>
-                </div>
+                <input type="file" id="input-logo-file" accept="image/*" required class="text-xs text-sky-800">
+                <input type="password" id="pass-logo" required placeholder="Password: logo@1234#" class="w-full bg-sky-50 border border-sky-200 rounded-xl p-2.5 text-sm">
+                <div class="flex gap-2"><button type="button" onclick="closeModal('modal-logo')" class="w-1/2 bg-sky-100 text-xs py-2 rounded-xl">Batal</button><button type="submit" class="w-1/2 bg-sky-500 text-white text-xs py-2 rounded-xl">Simpan</button></div>
             </form>
         </div>
     </div>
 
-    <!-- Modal Tambah Teknisi (daftar@1234#) -->
     <div id="modal-register" class="fixed inset-0 bg-slate-900/30 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
         <div class="bg-white border border-sky-200 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4">
-            <div class="flex justify-between items-center border-b border-sky-100 pb-3">
-                <h3 class="font-bold text-sky-950 text-sm">Pendaftaran Teknisi Baru</h3>
-                <button onclick="closeModal('modal-register')" class="text-sky-400 hover:text-sky-700"><i class="fa-solid fa-xmark"></i></button>
-            </div>
+            <h3 class="font-bold text-sky-950 text-sm">Tambah Teknisi Baru</h3>
             <form onsubmit="handleRegisterTech(event)" class="space-y-3">
-                <div>
-                    <label class="block text-xs font-bold text-sky-900 mb-1">Nama Lengkap Teknisi</label>
-                    <input type="text" id="reg-name" required placeholder="Contoh: Ahmad Rizki" class="w-full bg-sky-50 border border-sky-200 rounded-xl p-2.5 text-sky-950 text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-sky-900 mb-1">Kode Unik Login Teknisi</label>
-                    <input type="text" id="reg-code" required placeholder="Contoh: TEK-01" class="w-full bg-sky-50 border border-sky-200 rounded-xl p-2.5 text-sky-950 text-sm font-mono uppercase">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-amber-800 mb-1">Password Verifikasi Admin</label>
-                    <input type="password" id="reg-pass" required placeholder="Masukkan password pendaftaran" class="w-full bg-sky-50 border border-sky-200 rounded-xl p-2.5 text-sky-950 text-sm">
-                    <p class="text-[10px] text-sky-500 mt-1">*Sandi khusus simpan: <code class="text-amber-700 font-bold">daftar@1234#</code></p>
-                </div>
-                <div class="flex gap-2 pt-2">
-                    <button type="button" onclick="closeModal('modal-register')" class="w-1/2 bg-sky-100 text-sky-800 py-2.5 rounded-xl text-xs font-semibold">Batal</button>
-                    <button type="submit" class="w-1/2 bg-sky-500 hover:bg-sky-600 text-white py-2.5 rounded-xl text-xs font-semibold">Simpan Permanen</button>
-                </div>
+                <input type="text" id="reg-name" required placeholder="Nama Teknisi" class="w-full bg-sky-50 border border-sky-200 rounded-xl p-2.5 text-sm">
+                <input type="text" id="reg-code" required placeholder="Kode Unik (misal: TEK-01)" class="w-full bg-sky-50 border border-sky-200 rounded-xl p-2.5 text-sm font-mono uppercase">
+                <input type="password" id="reg-pass" required placeholder="Password: daftar@1234#" class="w-full bg-sky-50 border border-sky-200 rounded-xl p-2.5 text-sm">
+                <div class="flex gap-2"><button type="button" onclick="closeModal('modal-register')" class="w-1/2 bg-sky-100 text-xs py-2 rounded-xl">Batal</button><button type="submit" class="w-1/2 bg-sky-500 text-white text-xs py-2 rounded-xl">Simpan</button></div>
             </form>
         </div>
     </div>
 
-    <!-- Modal Foto Teknisi (foto@1234#) -->
     <div id="modal-tech-photo" class="fixed inset-0 bg-slate-900/30 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
         <div class="bg-white border border-sky-200 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4">
-            <div class="flex justify-between items-center border-b border-sky-100 pb-3">
-                <h3 class="font-bold text-sky-950 text-sm">Upload / Ubah Foto Teknisi</h3>
-                <button onclick="closeModal('modal-tech-photo')" class="text-sky-400 hover:text-sky-700"><i class="fa-solid fa-xmark"></i></button>
-            </div>
+            <h3 class="font-bold text-sky-950 text-sm">Upload Foto Teknisi</h3>
             <form onsubmit="handleSaveTechPhoto(event)" class="space-y-3">
-                <div>
-                    <label class="block text-xs font-bold text-sky-900 mb-1">Pilih Teknisi</label>
-                    <select id="select-tech-photo" required class="w-full bg-sky-50 border border-sky-200 rounded-xl p-2.5 text-sky-950 text-sm">
-                        <!-- Dynamic Options -->
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-sky-900 mb-1">Pilih Foto Profile Teknisi</label>
-                    <input type="file" id="input-tech-photo-file" accept="image/*" required class="text-xs text-sky-800 file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:bg-sky-500 file:text-white">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-amber-800 mb-1">Password Verifikasi Foto</label>
-                    <input type="password" id="pass-photo" required placeholder="Masukkan password foto" class="w-full bg-sky-50 border border-sky-200 rounded-xl p-2.5 text-sky-950 text-sm">
-                    <p class="text-[10px] text-sky-500 mt-1">*Sandi khusus foto: <code class="text-amber-700 font-bold">foto@1234#</code></p>
-                </div>
-                <div class="flex gap-2 pt-2">
-                    <button type="button" onclick="closeModal('modal-tech-photo')" class="w-1/2 bg-sky-100 text-sky-800 py-2.5 rounded-xl text-xs font-semibold">Batal</button>
-                    <button type="submit" class="w-1/2 bg-sky-500 hover:bg-sky-600 text-white py-2.5 rounded-xl text-xs font-semibold">Simpan Foto</button>
-                </div>
+                <select id="select-tech-photo" required class="w-full bg-sky-50 border border-sky-200 rounded-xl p-2.5 text-sm"></select>
+                <input type="file" id="input-tech-photo-file" accept="image/*" required class="text-xs text-sky-800">
+                <input type="password" id="pass-photo" required placeholder="Password: foto@1234#" class="w-full bg-sky-50 border border-sky-200 rounded-xl p-2.5 text-sm">
+                <div class="flex gap-2"><button type="button" onclick="closeModal('modal-tech-photo')" class="w-1/2 bg-sky-100 text-xs py-2 rounded-xl">Batal</button><button type="submit" class="w-1/2 bg-sky-500 text-white text-xs py-2 rounded-xl">Simpan</button></div>
             </form>
         </div>
     </div>
 
-    <!-- Modal Atur Pekerjaan Prioritas -->
     <div id="modal-priority" class="fixed inset-0 bg-slate-900/30 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
         <div class="bg-white border border-sky-200 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4">
-            <div class="flex justify-between items-center border-b border-sky-100 pb-3">
-                <h3 class="font-bold text-sky-950 text-sm">Atur Pekerjaan yang Harus Didahulukan</h3>
-                <button onclick="closeModal('modal-priority')" class="text-sky-400 hover:text-sky-700"><i class="fa-solid fa-xmark"></i></button>
-            </div>
+            <h3 class="font-bold text-sky-950 text-sm">Atur Prioritas Pekerjaan</h3>
             <form onsubmit="handleSavePriority(event)" class="space-y-3">
-                <div>
-                    <label class="block text-xs font-bold text-sky-900 mb-1">Daftar Tugas Urgen / Penting</label>
-                    <textarea id="priority-input-text" rows="4" required placeholder="Tulis tugas urgen di sini..." class="w-full bg-sky-50 border border-sky-200 rounded-xl p-3 text-sky-950 text-sm"></textarea>
-                </div>
-                <div class="flex gap-2 pt-2">
-                    <button type="button" onclick="closeModal('modal-priority')" class="w-1/2 bg-sky-100 text-sky-800 py-2.5 rounded-xl text-xs font-semibold">Batal</button>
-                    <button type="submit" class="w-1/2 bg-amber-500 hover:bg-amber-600 text-white py-2.5 rounded-xl text-xs font-semibold">Update Prioritas</button>
-                </div>
+                <textarea id="priority-input-text" rows="4" required class="w-full bg-sky-50 border border-sky-200 rounded-xl p-3 text-sm"></textarea>
+                <div class="flex gap-2"><button type="button" onclick="closeModal('modal-priority')" class="w-1/2 bg-sky-100 text-xs py-2 rounded-xl">Batal</button><button type="submit" class="w-1/2 bg-amber-500 text-white text-xs py-2 rounded-xl">Update</button></div>
             </form>
         </div>
     </div>
 
-    <!-- JavaScript Logic -->
-    <script>
-        const KEY_LOGO = 'HE_LOGO_DATA';
-        const KEY_TECHS = 'HE_TECHS_DATA';
-        const KEY_REPORTS = 'HE_REPORTS_DATA';
-        const KEY_PRIORITY = 'HE_PRIORITY_DATA';
+    <!-- ================= SCRIPT FIREBASE COMPAT ================= -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
+    <script>
+        // FIREBASE CONFIG MILIK ANDA (SUDAH DIPERBAIKI SCRIPTNYA)
+        const firebaseConfig = {
+            apiKey: "AIzaSyB_Na4VJaNgX-xjOmOurmyVHHx2x9KJiGQ",
+            authDomain: "laporan-kerja-teknisi-el-hajj.firebaseapp.com",
+            databaseURL: "https://laporan-kerja-teknisi-el-hajj-default-rtdb.firebaseio.com",
+            projectId: "laporan-kerja-teknisi-el-hajj",
+            storageBucket: "laporan-kerja-teknisi-el-hajj.firebasestorage.app",
+            messagingSenderId: "823106213778",
+            appId: "1:823106213778:web:dbc4ee8cfb0bf446ba134b",
+            measurementId: "G-2X9B8NQ5NT"
+        };
+
+        // Inisialisasi Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Passwords
         const PASS_ADMIN = "adnin@1234#";
         const PASS_REGISTER = "daftar@1234#";
         const PASS_DELETE = "delet@1234#";
@@ -355,37 +277,103 @@
 
         let currentTech = null;
         let isAdminLoggedIn = false;
+        let localTechs = [];
 
         const defaultLogo = 'https://via.placeholder.com/150/0284c7/ffffff?text=ELHAJJ';
         const defaultPhoto = 'https://via.placeholder.com/150/0284c7/ffffff?text=TEKNISI';
-        const defaultTechs = [
-            { id: 1, name: 'Budi Santoso', code: 'TEK-01', photo: defaultPhoto },
-            { id: 2, name: 'Ahmad Rizki', code: 'TEK-02', photo: defaultPhoto }
-        ];
 
         document.addEventListener('DOMContentLoaded', () => {
-            if (!localStorage.getItem(KEY_LOGO)) localStorage.setItem(KEY_LOGO, defaultLogo);
-            if (!localStorage.getItem(KEY_TECHS)) localStorage.setItem(KEY_TECHS, JSON.stringify(defaultTechs));
-            if (!localStorage.getItem(KEY_PRIORITY)) localStorage.setItem(KEY_PRIORITY, "1. Cek suhu AC Ballroom Utama\n2. Perbaikan kebocoran pipa Kamar 201");
-
-            updateLogos();
             updateRealtimeClock();
             setInterval(updateRealtimeClock, 1000);
-            renderPriorityTask();
-            renderTechList();
-            renderReports();
+            listenFirebaseData();
         });
+
+        // TERSAMBUNG REALTIME DATABASE
+        function listenFirebaseData() {
+            // Read Logo
+            db.ref('app_settings/logo').on('value', snap => {
+                const logo = snap.val() || defaultLogo;
+                document.getElementById('nav-logo').src = logo;
+                document.getElementById('welcome-logo').src = logo;
+            });
+
+            // Read Priority Task
+            db.ref('app_settings/priority').on('value', snap => {
+                document.getElementById('priority-task-text').innerText = snap.val() || "Belum ada pekerjaan prioritas khusus.";
+            });
+
+            // Read Technicians
+            db.ref('technicians').on('value', snap => {
+                const data = snap.val();
+                localTechs = [];
+                if (data) {
+                    Object.keys(data).forEach(key => localTechs.push({ id: key, ...data[key] }));
+                } else {
+                    // Seed initial tech if empty
+                    db.ref('technicians').push({ name: 'Budi Santoso', code: 'TEK-01', photo: defaultPhoto });
+                }
+                renderTechList();
+            });
+
+            // Read Reports Realtime
+            db.ref('reports').on('value', snap => {
+                const data = snap.val();
+                const reportsContainer = document.getElementById('reports-container');
+                if (!data) {
+                    reportsContainer.innerHTML = `<div class="bg-white border border-sky-200 rounded-3xl p-8 text-center text-sky-600 text-sm">Belum ada laporan kerja tersimpan di cloud.</div>`;
+                    return;
+                }
+                const reportsArr = [];
+                Object.keys(data).forEach(key => reportsArr.unshift({ id: key, ...data[key] }));
+
+                db.ref('app_settings/logo').once('value').then(logoSnap => {
+                    const currentLogo = logoSnap.val() || defaultLogo;
+                    reportsContainer.innerHTML = reportsArr.map(r => `
+                        <div class="card-print bg-white text-slate-800 rounded-3xl p-6 shadow-xl border border-sky-100 space-y-4">
+                            <div class="flex justify-between items-center border-b-2 border-slate-100 pb-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="${currentLogo}" class="w-12 h-12 object-contain rounded-xl border border-slate-200">
+                                    <div>
+                                        <h2 class="text-base font-extrabold text-sky-950 uppercase tracking-wide">Laporan Teknisi Hotel Grand Elhajj</h2>
+                                        <p class="text-xs text-slate-500 font-medium">${r.timestamp}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 text-right">
+                                    <div>
+                                        <h4 class="text-xs font-bold text-slate-800">${r.techName}</h4>
+                                        <span class="text-[11px] font-mono bg-sky-100 text-sky-800 px-2 py-0.5 rounded-lg border border-sky-200 font-bold">${r.techCode}</span>
+                                    </div>
+                                    <img src="${r.techPhoto || defaultPhoto}" class="w-10 h-10 rounded-full object-cover border border-slate-200">
+                                </div>
+                            </div>
+                            <div>
+                                <span class="text-[11px] font-bold text-sky-600 uppercase">Lokasi / Pekerjaan</span>
+                                <h3 class="text-lg font-bold text-slate-900">${r.title}</h3>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <span class="text-xs font-bold text-amber-800 bg-amber-50 px-2 py-1 rounded-lg">Before</span>
+                                    <img src="${r.beforeImg}" class="mt-1 rounded-2xl w-full h-48 object-cover border">
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-emerald-800 bg-emerald-50 px-2 py-1 rounded-lg">After</span>
+                                    <img src="${r.afterImg}" class="mt-1 rounded-2xl w-full h-48 object-cover border">
+                                </div>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-2xl border">
+                                <span class="text-xs font-bold text-slate-700 block mb-1">Catatan:</span>
+                                <p class="text-xs text-slate-800 whitespace-pre-line leading-relaxed">${r.notes}</p>
+                            </div>
+                        </div>
+                    `).join('');
+                });
+            });
+        }
 
         function updateRealtimeClock() {
             const now = new Date();
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
             document.getElementById('realtime-clock').innerText = now.toLocaleDateString('id-ID', options);
-        }
-
-        function updateLogos() {
-            const logo = localStorage.getItem(KEY_LOGO) || defaultLogo;
-            document.getElementById('nav-logo').src = logo;
-            document.getElementById('welcome-logo').src = logo;
         }
 
         function showToast(msg) {
@@ -396,51 +384,33 @@
         }
 
         function switchTab(tab) {
-            const techSec = document.getElementById('tech-section');
-            const adminSec = document.getElementById('admin-section');
-            const techBtn = document.getElementById('nav-tech-btn');
-            const adminBtn = document.getElementById('nav-admin-btn');
-
             if (tab === 'tech') {
-                techSec.classList.remove('hidden');
-                adminSec.classList.add('hidden');
-                techBtn.className = "px-3 md:px-4 py-1.5 rounded-lg font-semibold transition-all bg-sky-500 text-white shadow-sm";
-                adminBtn.className = "px-3 md:px-4 py-1.5 rounded-lg font-semibold transition-all text-sky-700 hover:text-sky-900";
-            } else if (tab === 'admin') {
-                adminSec.classList.remove('hidden');
-                techSec.classList.add('hidden');
-                adminBtn.className = "px-3 md:px-4 py-1.5 rounded-lg font-semibold transition-all bg-sky-500 text-white shadow-sm";
-                techBtn.className = "px-3 md:px-4 py-1.5 rounded-lg font-semibold transition-all text-sky-700 hover:text-sky-900";
-                renderReports();
+                document.getElementById('tech-section').classList.remove('hidden');
+                document.getElementById('admin-section').classList.add('hidden');
+            } else {
+                document.getElementById('admin-section').classList.remove('hidden');
+                document.getElementById('tech-section').classList.add('hidden');
             }
         }
 
         function requestAdminAccess() {
-            if (isAdminLoggedIn) {
-                switchTab('admin');
-            } else {
-                openModal('modal-admin-auth');
-            }
+            if (isAdminLoggedIn) switchTab('admin');
+            else openModal('modal-admin-auth');
         }
 
         function handleAdminLogin(e) {
             e.preventDefault();
-            const pass = document.getElementById('admin-pass-input').value;
-            if (pass === PASS_ADMIN) {
+            if (document.getElementById('admin-pass-input').value === PASS_ADMIN) {
                 isAdminLoggedIn = true;
                 closeModal('modal-admin-auth');
-                document.getElementById('admin-pass-input').value = '';
                 switchTab('admin');
-                showToast("Akses Admin berhasil Diverifikasi!");
-            } else {
-                alert("Password Admin Salah!");
-            }
+                showToast("Akses Admin Diverifikasi!");
+            } else alert("Password Admin Salah!");
         }
 
         function showCodeInput() {
             document.getElementById('code-input-trigger').classList.add('hidden');
             document.getElementById('code-form').classList.remove('hidden');
-            document.getElementById('tech-code-input').focus();
         }
 
         function hideCodeInput() {
@@ -450,41 +420,32 @@
 
         function handleTechLogin(e) {
             e.preventDefault();
-            const codeInput = document.getElementById('tech-code-input').value.trim().toUpperCase();
-            const technicians = JSON.parse(localStorage.getItem(KEY_TECHS)) || [];
-
-            const found = technicians.find(t => t.code.toUpperCase() === codeInput);
+            const inputCode = document.getElementById('tech-code-input').value.trim().toUpperCase();
+            const found = localTechs.find(t => t.code && t.code.toUpperCase() === inputCode);
 
             if (found) {
                 currentTech = found;
                 document.getElementById('active-tech-name').innerText = found.name;
                 document.getElementById('active-tech-code').innerText = `Kode: ${found.code}`;
                 document.getElementById('active-tech-photo').src = found.photo || defaultPhoto;
-
                 document.getElementById('tech-welcome-card').classList.add('hidden');
                 document.getElementById('tech-form-card').classList.remove('hidden');
-                showToast(`Selamat bekerja, ${found.name}!`);
-            } else {
-                alert('Kode Teknisi tidak terdaftar! Silakan hubungi Admin.');
-            }
+                showToast(`Selamat datang, ${found.name}!`);
+            } else alert('Kode Teknisi Tidak Ditemukan!');
         }
 
         function handleTechLogout() {
             currentTech = null;
-            document.getElementById('tech-code-input').value = '';
-            hideCodeInput();
             document.getElementById('tech-welcome-card').classList.remove('hidden');
             document.getElementById('tech-form-card').classList.add('hidden');
+            hideCodeInput();
         }
 
         function previewImage(input, previewId) {
             const preview = document.getElementById(previewId);
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.classList.remove('hidden');
-                }
+                reader.onload = e => { preview.src = e.target.result; preview.classList.remove('hidden'); }
                 reader.readAsDataURL(input.files[0]);
             }
         }
@@ -498,16 +459,12 @@
             const imgBefore = document.getElementById('preview-before').src;
             const imgAfter = document.getElementById('preview-after').src;
 
-            if (!imgBefore || !imgAfter || imgBefore === '' || imgAfter === '') {
-                alert('Wajib mengunggah kedua foto (Sebelum dan Sesudah)!');
-                return;
-            }
+            if (!imgBefore || !imgAfter) { alert('Foto Sebelum & Sesudah Wajib Diisi!'); return; }
 
             const now = new Date();
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-            
+
             const newReport = {
-                id: Date.now(),
                 techName: currentTech.name,
                 techCode: currentTech.code,
                 techPhoto: currentTech.photo || defaultPhoto,
@@ -518,45 +475,35 @@
                 timestamp: now.toLocaleDateString('id-ID', options)
             };
 
-            const reports = JSON.parse(localStorage.getItem(KEY_REPORTS)) || [];
-            reports.unshift(newReport);
-            localStorage.setItem(KEY_REPORTS, JSON.stringify(reports));
-
-            showToast("Laporan kerja berhasil dikirim & tersimpan!");
-
-            e.target.reset();
-            document.getElementById('preview-before').classList.add('hidden');
-            document.getElementById('preview-after').classList.add('hidden');
-        }
-
-        function renderPriorityTask() {
-            const p = localStorage.getItem(KEY_PRIORITY) || "Belum ada tugas prioritas.";
-            document.getElementById('priority-task-text').innerText = p;
+            // Push to Firebase Online
+            db.ref('reports').push(newReport).then(() => {
+                showToast("Laporan Berhasil Tersimpan di Cloud!");
+                e.target.reset();
+                document.getElementById('preview-before').classList.add('hidden');
+                document.getElementById('preview-after').classList.add('hidden');
+            });
         }
 
         function handleSavePriority(e) {
             e.preventDefault();
             const val = document.getElementById('priority-input-text').value;
-            localStorage.setItem(KEY_PRIORITY, val);
-            renderPriorityTask();
-            closeModal('modal-priority');
-            showToast("Prioritas pekerjaan berhasil diubah!");
+            db.ref('app_settings/priority').set(val).then(() => {
+                closeModal('modal-priority');
+                showToast("Prioritas Pekerjaan Diperbarui!");
+            });
         }
 
         function handleSaveLogo(e) {
             e.preventDefault();
-            const pass = document.getElementById('pass-logo').value;
-            if (pass !== PASS_LOGO) { alert("Password Logo Salah!"); return; }
-
+            if (document.getElementById('pass-logo').value !== PASS_LOGO) { alert("Password Logo Salah!"); return; }
             const file = document.getElementById('input-logo-file').files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(evt) {
-                    localStorage.setItem(KEY_LOGO, evt.target.result);
-                    updateLogos();
-                    closeModal('modal-logo');
-                    e.target.reset();
-                    showToast("Logo Hotel Grand Elhajj Berhasil Diperbarui!");
+                reader.onload = evt => {
+                    db.ref('app_settings/logo').set(evt.target.result).then(() => {
+                        closeModal('modal-logo');
+                        showToast("Logo Hotel Berhasil Diubah!");
+                    });
                 }
                 reader.readAsDataURL(file);
             }
@@ -564,56 +511,37 @@
 
         function handleRegisterTech(e) {
             e.preventDefault();
-            const pass = document.getElementById('reg-pass').value;
-            if (pass !== PASS_REGISTER) { alert("Password Pendaftaran Salah!"); return; }
-
+            if (document.getElementById('reg-pass').value !== PASS_REGISTER) { alert("Password Salah!"); return; }
             const name = document.getElementById('reg-name').value.trim();
             const code = document.getElementById('reg-code').value.trim().toUpperCase();
 
-            const technicians = JSON.parse(localStorage.getItem(KEY_TECHS)) || [];
-            technicians.push({ id: Date.now(), name, code, photo: defaultPhoto });
-            localStorage.setItem(KEY_TECHS, JSON.stringify(technicians));
-
-            closeModal('modal-register');
-            e.target.reset();
-            renderTechList();
-            showToast(`Teknisi ${name} Berhasil Disimpan Permanen!`);
+            db.ref('technicians').push({ name, code, photo: defaultPhoto }).then(() => {
+                closeModal('modal-register');
+                e.target.reset();
+                showToast(`Teknisi ${name} Berhasil Ditambahkan!`);
+            });
         }
 
         function deleteTech(id) {
-            const pass = prompt('Masukkan Password Admin untuk menghapus teknisi:');
-            if (pass === null) return;
-            if (pass !== PASS_DELETE) { alert('Password Penghapusan Salah!'); return; }
-
-            let technicians = JSON.parse(localStorage.getItem(KEY_TECHS)) || [];
-            technicians = technicians.filter(t => t.id !== id);
-            localStorage.setItem(KEY_TECHS, JSON.stringify(technicians));
-
-            renderTechList();
-            showToast("Teknisi Berhasil Dihapus.");
+            const pass = prompt('Masukkan Password Admin untuk Hapus:');
+            if (pass === PASS_DELETE) {
+                db.ref(`technicians/${id}`).remove().then(() => showToast("Teknisi Dihapus."));
+            } else if(pass !== null) alert("Password Salah!");
         }
 
         function handleSaveTechPhoto(e) {
             e.preventDefault();
-            const pass = document.getElementById('pass-photo').value;
-            if (pass !== PASS_PHOTO) { alert("Password Foto Salah!"); return; }
-
-            const techId = parseInt(document.getElementById('select-tech-photo').value);
+            if (document.getElementById('pass-photo').value !== PASS_PHOTO) { alert("Password Salah!"); return; }
+            const techKey = document.getElementById('select-tech-photo').value;
             const file = document.getElementById('input-tech-photo-file').files[0];
 
-            if (file && techId) {
+            if (file && techKey) {
                 const reader = new FileReader();
-                reader.onload = function(evt) {
-                    let technicians = JSON.parse(localStorage.getItem(KEY_TECHS)) || [];
-                    const idx = technicians.findIndex(t => t.id === techId);
-                    if (idx !== -1) {
-                        technicians[idx].photo = evt.target.result;
-                        localStorage.setItem(KEY_TECHS, JSON.stringify(technicians));
-                        renderTechList();
+                reader.onload = evt => {
+                    db.ref(`technicians/${techKey}/photo`).set(evt.target.result).then(() => {
                         closeModal('modal-tech-photo');
-                        e.target.reset();
-                        showToast("Foto Teknisi Berhasil Diperbarui!");
-                    }
+                        showToast("Foto Teknisi Diperbarui!");
+                    });
                 }
                 reader.readAsDataURL(file);
             }
@@ -621,126 +549,40 @@
 
         function openModal(id) {
             if (id === 'modal-priority') {
-                document.getElementById('priority-input-text').value = localStorage.getItem(KEY_PRIORITY) || '';
+                db.ref('app_settings/priority').once('value').then(snap => {
+                    document.getElementById('priority-input-text').value = snap.val() || '';
+                });
             } else if (id === 'modal-tech-photo') {
-                const technicians = JSON.parse(localStorage.getItem(KEY_TECHS)) || [];
-                const sel = document.getElementById('select-tech-photo');
-                sel.innerHTML = technicians.map(t => `<option value="${t.id}">${t.name} (${t.code})</option>`).join('');
+                document.getElementById('select-tech-photo').innerHTML = localTechs.map(t => `<option value="${t.id}">${t.name} (${t.code})</option>`).join('');
             }
-            const modal = document.getElementById(id);
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+            document.getElementById(id).classList.remove('hidden');
+            document.getElementById(id).classList.add('flex');
         }
 
         function closeModal(id) {
-            const modal = document.getElementById(id);
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+            document.getElementById(id).classList.add('hidden');
+            document.getElementById(id).classList.remove('flex');
         }
 
         function renderTechList() {
             const container = document.getElementById('tech-list-container');
-            const technicians = JSON.parse(localStorage.getItem(KEY_TECHS)) || [];
-
-            if (technicians.length === 0) {
-                container.innerHTML = `<p class="text-xs text-sky-600 italic col-span-full">Belum ada teknisi terdaftar.</p>`;
+            if (localTechs.length === 0) {
+                container.innerHTML = `<p class="text-xs text-sky-600 italic col-span-full">Belum ada teknisi.</p>`;
                 return;
             }
-
-            container.innerHTML = technicians.map(t => `
+            container.innerHTML = localTechs.map(t => `
                 <div class="bg-sky-50/80 border border-sky-200 rounded-2xl p-3 flex justify-between items-center gap-3">
                     <div class="flex items-center gap-3">
-                        <img src="${t.photo || defaultPhoto}" alt="Foto ${t.name}" class="w-10 h-10 rounded-xl object-cover border border-sky-200 bg-white">
+                        <img src="${t.photo || defaultPhoto}" class="w-10 h-10 rounded-xl object-cover border border-sky-200 bg-white">
                         <div>
                             <div class="font-bold text-xs md:text-sm text-sky-950">${t.name}</div>
                             <div class="text-[11px] text-sky-600 font-mono font-semibold">Kode: ${t.code}</div>
                         </div>
                     </div>
-                    <button onclick="deleteTech(${t.id})" class="text-red-400 hover:text-red-600 p-2 hover:bg-red-50 rounded-xl transition" title="Hapus Teknisi">
-                        <i class="fa-solid fa-trash-can text-sm"></i>
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        function renderReports() {
-            const container = document.getElementById('reports-container');
-            const reports = JSON.parse(localStorage.getItem(KEY_REPORTS)) || [];
-            const logo = localStorage.getItem(KEY_LOGO) || defaultLogo;
-
-            if (reports.length === 0) {
-                container.innerHTML = `<div class="bg-white border border-sky-200 rounded-3xl p-8 text-center text-sky-600 text-sm">Belum ada laporan kerja yang dikirimkan.</div>`;
-                return;
-            }
-
-            container.innerHTML = reports.map(r => `
-                <div class="card-print bg-white text-slate-800 rounded-3xl p-6 shadow-xl border border-sky-100 space-y-4">
-                    <div class="flex justify-between items-center border-b-2 border-slate-100 pb-4">
-                        <div class="flex items-center gap-3">
-                            <img src="${logo}" alt="Logo Hotel" class="w-12 h-12 object-contain rounded-xl border border-slate-200">
-                            <div>
-                                <h2 class="text-base font-extrabold text-sky-950 tracking-wide uppercase">Laporan Teknisi Hotel Grand Elhajj</h2>
-                                <p class="text-xs text-slate-500 font-medium">${r.timestamp}</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3 text-right">
-                            <div>
-                                <h4 class="text-xs font-bold text-slate-800">${r.techName}</h4>
-                                <span class="text-[11px] font-mono bg-sky-100 text-sky-800 px-2 py-0.5 rounded-lg border border-sky-200 font-bold">${r.techCode}</span>
-                            </div>
-                            <img src="${r.techPhoto || defaultPhoto}" alt="Foto Teknisi" class="w-10 h-10 rounded-full object-cover border border-slate-200">
-                        </div>
-                    </div>
-
-                    <div>
-                        <span class="text-[11px] font-bold text-sky-600 uppercase tracking-wider">Judul / Lokasi Pekerjaan</span>
-                        <h3 class="text-lg font-bold text-slate-900">${r.title}</h3>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
-                        <div class="space-y-1.5">
-                            <span class="text-xs font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-lg inline-block">
-                                <i class="fa-solid fa-camera mr-1"></i> Foto Sebelum (Before)
-                            </span>
-                            <img src="${r.beforeImg}" class="rounded-2xl w-full h-52 object-cover border border-slate-200 shadow-sm">
-                        </div>
-                        <div class="space-y-1.5">
-                            <span class="text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg inline-block">
-                                <i class="fa-solid fa-camera mr-1"></i> Foto Sesudah (After)
-                            </span>
-                            <img src="${r.afterImg}" class="rounded-2xl w-full h-52 object-cover border border-slate-200 shadow-sm">
-                        </div>
-                    </div>
-
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                        <span class="text-xs font-bold text-slate-700 block mb-1">Catatan Pekerjaan:</span>
-                        <p class="text-xs md:text-sm text-slate-800 whitespace-pre-line leading-relaxed">${r.notes}</p>
-                    </div>
+                    <button onclick="deleteTech('${t.id}')" class="text-red-400 hover:text-red-600 p-2"><i class="fa-solid fa-trash-can text-sm"></i></button>
                 </div>
             `).join('');
         }
     </script>
-    </body>
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyB_Na4VJaNgX-xjOmOurmyVHHx2x9KJiGQ",
-  authDomain: "laporan-kerja-teknisi-el-hajj.firebaseapp.com",
-  projectId: "laporan-kerja-teknisi-el-hajj",
-  storageBucket: "laporan-kerja-teknisi-el-hajj.firebasestorage.app",
-  messagingSenderId: "823106213778",
-  appId: "1:823106213778:web:dbc4ee8cfb0bf446ba134b",
-  measurementId: "G-2X9B8NQ5NT"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 </body>
 </html>
