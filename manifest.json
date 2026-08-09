@@ -3,20 +3,18 @@
   "name": "Teknisi Hotel Grand Elhajj",
   "icons": [
     {
-      "src": "icon.png",
-      "type": "image/png",
-      "sizes": "192x192",
-      "purpose": "any maskable"
+      "src": "logo.jpeg",
+      "type": "image/jpeg",
+      "sizes": "192x192"
     },
     {
-      "src": "icon.png",
-      "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "any maskable"
+      "src": "logo.jpeg",
+      "type": "image/jpeg",
+      "sizes": "512x512"
     }
   ],
-  "start_url": "/",
-  "background_color": "#ffffff",
+  "start_url": ".",
+  "background_color": "#f8fafc",
   "theme_color": "#0284c7",
   "display": "standalone",
   "orientation": "portrait"
