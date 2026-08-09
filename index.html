@@ -8,6 +8,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase SDK (Compat Version untuk Single File HTML) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
     <style>
         @media print {
             .no-print { display: none !important; }
@@ -331,12 +336,23 @@
         </div>
     </div>
 
-    <!-- JavaScript Logic & Automatic Image Compression -->
+    <!-- JavaScript Logic & Firebase Integration -->
     <script>
-        const KEY_LOGO = 'HE_LOGO_DATA';
-        const KEY_TECHS = 'HE_TECHS_DATA';
-        const KEY_REPORTS = 'HE_REPORTS_DATA';
-        const KEY_PRIORITY = 'HE_PRIORITY_DATA';
+        // KUNCI KONFIGURASI FIREBASE ANDA
+        const firebaseConfig = {
+            apiKey: "AIzaSyDMwS3YokquBBOGzxagCbd97GexVzX7aLA",
+            authDomain: "laporan-kerja-teknisi-elhajj.firebaseapp.com",
+            databaseURL: "https://laporan-kerja-teknisi-elhajj-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "laporan-kerja-teknisi-elhajj",
+            storageBucket: "laporan-kerja-teknisi-elhajj.firebasestorage.app",
+            messagingSenderId: "139117268403",
+            appId: "1:139117268403:web:df21c2b96ce3d944db8fc6",
+            measurementId: "G-31CJM8E611"
+        };
+
+        // Inisialisasi Firebase Database
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
 
         const PASS_ADMIN = "adnin@1234#";
         const PASS_REGISTER = "daftar@1234#";
@@ -349,25 +365,55 @@
 
         const defaultLogo = 'https://via.placeholder.com/150/0284c7/ffffff?text=ELHAJJ';
         const defaultPhoto = 'https://via.placeholder.com/150/0284c7/ffffff?text=TEKNISI';
-        const defaultTechs = [
-            { id: 1, name: 'Budi Santoso', code: 'TEK-01', photo: defaultPhoto },
-            { id: 2, name: 'Ahmad Rizki', code: 'TEK-02', photo: defaultPhoto }
-        ];
+        
+        let localTechs = [];
+        let localReports = [];
 
         document.addEventListener('DOMContentLoaded', () => {
-            if (!localStorage.getItem(KEY_LOGO)) localStorage.setItem(KEY_LOGO, defaultLogo);
-            if (!localStorage.getItem(KEY_TECHS)) localStorage.setItem(KEY_TECHS, JSON.stringify(defaultTechs));
-            if (!localStorage.getItem(KEY_PRIORITY)) localStorage.setItem(KEY_PRIORITY, "1. Cek suhu AC Ballroom Utama\n2. Perbaikan kebocoran pipa Kamar 201");
-
-            updateLogos();
             updateRealtimeClock();
             setInterval(updateRealtimeClock, 1000);
-            renderPriorityTask();
-            renderTechList();
-            renderReports();
+
+            // MENDENGARKAN PERUBAHAN DATABASE REALTIME DARI CLOUD FIREBASE
+            
+            // 1. Logo
+            db.ref('app_logo').on('value', snapshot => {
+                const logo = snapshot.val() || defaultLogo;
+                document.getElementById('nav-logo').src = logo;
+                document.getElementById('welcome-logo').src = logo;
+            });
+
+            // 2. Prioritas
+            db.ref('app_priority').on('value', snapshot => {
+                const priorityText = snapshot.val() || "Belum ada prioritas pekerjaan khusus dari Admin.";
+                document.getElementById('priority-task-text').innerText = priorityText;
+                document.getElementById('priority-input-text').value = priorityText;
+            });
+
+            // 3. Teknisi
+            db.ref('app_techs').on('value', snapshot => {
+                const data = snapshot.val();
+                localTechs = data ? Object.values(data) : [];
+                
+                // Jika database masih kosong, isi default awal
+                if (localTechs.length === 0) {
+                    const initTechs = [
+                        { id: 101, name: 'Budi Santoso', code: 'TEK-01', photo: defaultPhoto },
+                        { id: 102, name: 'Ahmad Rizki', code: 'TEK-02', photo: defaultPhoto }
+                    ];
+                    initTechs.forEach(t => db.ref('app_techs/' + t.id).set(t));
+                }
+                renderTechList();
+            });
+
+            // 4. Laporan Kerja
+            db.ref('app_reports').on('value', snapshot => {
+                const data = snapshot.val();
+                localReports = data ? Object.values(data).sort((a,b) => b.id - a.id) : [];
+                renderReports();
+            });
         });
 
-        // FUNGSI UTAMA: Kompresi Gambar Otomatis (Max Width/Height: 600px, Kualitas: 60%)
+        // FUNGSI KOMPRESI GAMBAR OTOMATIS
         function compressImage(file, callback) {
             const reader = new FileReader();
             reader.readAsDataURL(file);
@@ -378,7 +424,7 @@
                     const canvas = document.createElement('canvas');
                     let width = img.width;
                     let height = img.height;
-                    const maxDim = 600; // Ukuran resolusi optimal
+                    const maxDim = 600;
 
                     if (width > height) {
                         if (width > maxDim) {
@@ -397,7 +443,6 @@
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
                     
-                    // Kompresi kualitas gambar menjadi JPEG 0.6 (sangat ringan)
                     const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.6);
                     callback(compressedDataUrl);
                 };
@@ -418,12 +463,6 @@
             const now = new Date();
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
             document.getElementById('realtime-clock').innerText = now.toLocaleDateString('id-ID', options);
-        }
-
-        function updateLogos() {
-            const logo = localStorage.getItem(KEY_LOGO) || defaultLogo;
-            document.getElementById('nav-logo').src = logo;
-            document.getElementById('welcome-logo').src = logo;
         }
 
         function showToast(msg) {
@@ -486,9 +525,7 @@
         function handleTechLogin(e) {
             e.preventDefault();
             const codeInput = document.getElementById('tech-code-input').value.trim().toUpperCase();
-            const technicians = JSON.parse(localStorage.getItem(KEY_TECHS)) || [];
-
-            const found = technicians.find(t => t.code.toUpperCase() === codeInput);
+            const found = localTechs.find(t => t.code.toUpperCase() === codeInput);
 
             if (found) {
                 currentTech = found;
@@ -528,9 +565,10 @@
 
             const now = new Date();
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-            
+            const reportId = Date.now();
+
             const newReport = {
-                id: Date.now(),
+                id: reportId,
                 techName: currentTech.name,
                 techCode: currentTech.code,
                 techPhoto: currentTech.photo || defaultPhoto,
@@ -541,47 +579,37 @@
                 timestamp: now.toLocaleDateString('id-ID', options)
             };
 
-            const reports = JSON.parse(localStorage.getItem(KEY_REPORTS)) || [];
-            reports.unshift(newReport);
-            localStorage.setItem(KEY_REPORTS, JSON.stringify(reports));
-
-            e.target.reset();
-            document.getElementById('preview-before').classList.add('hidden');
-            document.getElementById('preview-after').classList.add('hidden');
-
-            showToast('Laporan kerja berhasil dikirim!');
-            renderReports();
-        }
-
-        function renderPriorityTask() {
-            const priorityText = localStorage.getItem(KEY_PRIORITY) || "Belum ada prioritas pekerjaan khusus dari Admin.";
-            document.getElementById('priority-task-text').innerText = priorityText;
-            document.getElementById('priority-input-text').value = priorityText;
+            // SIMPAN PERMANEN KE FIREBASE CLOUD
+            db.ref('app_reports/' + reportId).set(newReport).then(() => {
+                e.target.reset();
+                document.getElementById('preview-before').classList.add('hidden');
+                document.getElementById('preview-after').classList.add('hidden');
+                showToast('Laporan kerja berhasil tersimpan di Cloud!');
+            });
         }
 
         function handleSavePriority(e) {
             e.preventDefault();
             const text = document.getElementById('priority-input-text').value;
-            localStorage.setItem(KEY_PRIORITY, text);
-            renderPriorityTask();
-            closeModal('modal-priority');
-            showToast('Daftar pekerjaan prioritas diperbarui!');
+            db.ref('app_priority').set(text).then(() => {
+                closeModal('modal-priority');
+                showToast('Daftar pekerjaan prioritas diperbarui!');
+            });
         }
 
         function renderTechList() {
-            const technicians = JSON.parse(localStorage.getItem(KEY_TECHS)) || [];
             const container = document.getElementById('tech-list-container');
             const selectPhoto = document.getElementById('select-tech-photo');
 
             container.innerHTML = '';
             selectPhoto.innerHTML = '';
 
-            if (technicians.length === 0) {
+            if (localTechs.length === 0) {
                 container.innerHTML = `<p class="text-xs text-sky-600 col-span-full">Belum ada teknisi terdaftar.</p>`;
                 return;
             }
 
-            technicians.forEach(t => {
+            localTechs.forEach(t => {
                 const card = document.createElement('div');
                 card.className = "flex items-center justify-between p-3 border border-sky-100 bg-sky-50/50 rounded-2xl";
                 card.innerHTML = `
@@ -616,21 +644,19 @@
                 return;
             }
 
-            const technicians = JSON.parse(localStorage.getItem(KEY_TECHS)) || [];
-            
-            if (technicians.some(t => t.code === code)) {
+            if (localTechs.some(t => t.code === code)) {
                 alert('Kode Teknisi sudah digunakan!');
                 return;
             }
 
-            const newTech = { id: Date.now(), name, code, photo: defaultPhoto };
-            technicians.push(newTech);
-            localStorage.setItem(KEY_TECHS, JSON.stringify(technicians));
+            const techId = Date.now();
+            const newTech = { id: techId, name, code, photo: defaultPhoto };
 
-            e.target.reset();
-            closeModal('modal-register');
-            renderTechList();
-            showToast(`Teknisi ${name} berhasil ditambahkan!`);
+            db.ref('app_techs/' + techId).set(newTech).then(() => {
+                e.target.reset();
+                closeModal('modal-register');
+                showToast(`Teknisi ${name} berhasil didaftarkan!`);
+            });
         }
 
         function handleSaveTechPhoto(e) {
@@ -646,22 +672,15 @@
 
             if (fileInput.files && fileInput.files[0]) {
                 compressImage(fileInput.files[0], (compressedUrl) => {
-                    const technicians = JSON.parse(localStorage.getItem(KEY_TECHS)) || [];
-                    const index = technicians.findIndex(t => t.id === techId);
-                    if (index !== -1) {
-                        technicians[index].photo = compressedUrl;
-                        localStorage.setItem(KEY_TECHS, JSON.stringify(technicians));
-                        
+                    db.ref('app_techs/' + techId + '/photo').set(compressedUrl).then(() => {
                         if (currentTech && currentTech.id === techId) {
                             currentTech.photo = compressedUrl;
                             document.getElementById('active-tech-photo').src = compressedUrl;
                         }
-
-                        renderTechList();
                         closeModal('modal-tech-photo');
                         e.target.reset();
                         showToast('Foto profil teknisi diperbarui!');
-                    }
+                    });
                 });
             }
         }
@@ -678,11 +697,11 @@
 
             if (fileInput.files && fileInput.files[0]) {
                 compressImage(fileInput.files[0], (compressedUrl) => {
-                    localStorage.setItem(KEY_LOGO, compressedUrl);
-                    updateLogos();
-                    closeModal('modal-logo');
-                    e.target.reset();
-                    showToast('Logo Hotel berhasil diperbarui!');
+                    db.ref('app_logo').set(compressedUrl).then(() => {
+                        closeModal('modal-logo');
+                        e.target.reset();
+                        showToast('Logo Hotel berhasil diperbarui!');
+                    });
                 });
             }
         }
@@ -690,22 +709,19 @@
         function deleteTech(id) {
             const pass = prompt('Masukkan Password Hapus (delet@1234#):');
             if (pass === PASS_DELETE) {
-                let technicians = JSON.parse(localStorage.getItem(KEY_TECHS)) || [];
-                technicians = technicians.filter(t => t.id !== id);
-                localStorage.setItem(KEY_TECHS, JSON.stringify(technicians));
-                renderTechList();
-                showToast('Data teknisi berhasil dihapus!');
+                db.ref('app_techs/' + id).remove().then(() => {
+                    showToast('Data teknisi berhasil dihapus!');
+                });
             } else if (pass !== null) {
                 alert('Password Hapus Salah!');
             }
         }
 
         function renderReports() {
-            const reports = JSON.parse(localStorage.getItem(KEY_REPORTS)) || [];
             const container = document.getElementById('reports-container');
             container.innerHTML = '';
 
-            if (reports.length === 0) {
+            if (localReports.length === 0) {
                 container.innerHTML = `
                     <div class="bg-white border border-sky-100 rounded-3xl p-8 text-center text-sky-600">
                         <i class="fa-solid fa-folder-open text-4xl mb-2 text-sky-300"></i>
@@ -715,7 +731,7 @@
                 return;
             }
 
-            reports.forEach(r => {
+            localReports.forEach(r => {
                 const card = document.createElement('div');
                 card.className = "card-print bg-white border border-sky-200 rounded-3xl p-5 md:p-6 shadow-xl space-y-4";
                 card.innerHTML = `
@@ -767,11 +783,9 @@
         function deleteReport(id) {
             const pass = prompt('Masukkan Password Hapus (delet@1234#):');
             if (pass === PASS_DELETE) {
-                let reports = JSON.parse(localStorage.getItem(KEY_REPORTS)) || [];
-                reports = reports.filter(r => r.id !== id);
-                localStorage.setItem(KEY_REPORTS, JSON.stringify(reports));
-                renderReports();
-                showToast('Laporan kerja berhasil dihapus!');
+                db.ref('app_reports/' + id).remove().then(() => {
+                    showToast('Laporan kerja berhasil dihapus!');
+                });
             } else if (pass !== null) {
                 alert('Password Hapus Salah!');
             }
