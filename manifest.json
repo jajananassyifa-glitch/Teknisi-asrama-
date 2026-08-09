@@ -1,21 +1,8 @@
-{
-  "short_name": "Teknisi Elhajj",
-  "name": "Teknisi Hotel Grand Elhajj",
-  "icons": [
-    {
-      "src": "logo.jpeg",
-      "type": "image/jpeg",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo.jpeg",
-      "type": "image/jpeg",
-      "sizes": "512x512"
-    }
-  ],
-  "start_url": ".",
-  "background_color": "#f8fafc",
-  "theme_color": "#0284c7",
-  "display": "standalone",
-  "orientation": "portrait"
-}
+<!-- PWA Settings -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+    <meta name="theme-color" content="#0284c7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Teknisi Elhajj">
