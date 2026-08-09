@@ -1,3 +1,5 @@
+const CACHE_NAME = 'elhajj-v1';
+
 self.addEventListener('install', (e) => {
   self.skipWaiting();
 });
@@ -7,5 +9,9 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  e.respondWith(fetch(e.request));
+  e.respondWith(
+    fetch(e.request).catch(() => {
+      return caches.match(e.request);
+    })
+  );
 });
