@@ -3,14 +3,9 @@
   "name": "Teknisi Hotel Grand Elhajj",
   "icons": [
     {
-      "src": "https://via.placeholder.com/192/0284c7/ffffff?text=ELHAJJ",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "https://via.placeholder.com/512/0284c7/ffffff?text=ELHAJJ",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "logo.jpeg",
+      "type": "image/jpeg",
+      "sizes": "192x192 512x512"
     }
   ],
   "start_url": "/",
